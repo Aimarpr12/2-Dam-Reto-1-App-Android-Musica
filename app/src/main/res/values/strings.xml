@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">reto1</string>
+    <!-- Login -->
+    <string name="login">Nombre de Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="button_login">Conectarse</string>
+
+    <!-- Register -->
+    <string name="repeat_password">Repita la contraseña</string>
+    <string name="email">Correo Electronico</string>
+    <string name="name">Nombre</string>
+    <string name="surname">Apellido</string>
+    <string name="button_register">Registrarse</string>
 </resources>
