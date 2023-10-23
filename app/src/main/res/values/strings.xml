@@ -21,5 +21,6 @@
     <string name="user">Usuario: </string>
     <string name="appName">MyTube</string>
     <string name="favoritos">Favoritos: </string>
+    <string name="author">Autor</string>
 
 </resources>
