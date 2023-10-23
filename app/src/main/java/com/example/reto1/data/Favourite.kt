@@ -4,7 +4,7 @@ import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
-data class Song(
+data class Favourite(
     val id: Int,
     val url: String,
     val title: String,
