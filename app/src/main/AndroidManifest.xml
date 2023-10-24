@@ -11,9 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Reto1"
+        android:networkSecurityConfig="@xml/network_security_config"
+
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.favourites.FavouriteActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,5 +24,5 @@
             </intent-filter>
         </activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
