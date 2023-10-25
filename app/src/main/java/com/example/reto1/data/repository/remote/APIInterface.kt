@@ -2,11 +2,11 @@ package com.example.reto1.data.repository.remote
 
 import com.example.reto1.data.Song
 import retrofit2.Response
-import retrofit2.http.DELETE
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface APIInterface {
 
