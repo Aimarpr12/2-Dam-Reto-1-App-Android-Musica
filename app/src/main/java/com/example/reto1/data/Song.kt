@@ -5,6 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Song(
+    val id: Int,
     val url: String,
     val title: String,
     val author: String

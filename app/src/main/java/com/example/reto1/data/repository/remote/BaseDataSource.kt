@@ -12,6 +12,9 @@ abstract class BaseDataSource {
                 val body = response.body()
                 if (body != null) {
                     return Resource.success(body)
+
+                }else{
+                    return Resource.success()
                 }
             }
             // podria no ser un error ...

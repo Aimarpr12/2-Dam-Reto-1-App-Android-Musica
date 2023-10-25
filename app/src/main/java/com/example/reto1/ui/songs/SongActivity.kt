@@ -66,6 +66,8 @@ class SongActivity: ComponentActivity() {
                 Resource.Status.SUCCESS -> {
                     viewModel.updateSongList()
 
+                    binding.seachSong.visibility = View.VISIBLE
+                    binding.deleteSong.visibility = View.VISIBLE
                     binding.newSongUrl.visibility = View.GONE
                     binding.newSongTitle.visibility = View.GONE
                     binding.newSongAuthor.visibility = View.GONE
@@ -81,7 +83,8 @@ class SongActivity: ComponentActivity() {
 
         })
         binding.addSong.setOnClickListener () {
-
+            binding.seachSong.visibility = View.GONE
+            binding.deleteSong.visibility = View.GONE
             binding.newSongUrl.visibility = View.VISIBLE
             binding.newSongTitle.visibility = View.VISIBLE
             binding.newSongAuthor.visibility = View.VISIBLE
@@ -95,6 +98,14 @@ class SongActivity: ComponentActivity() {
                 )
             }
         }
+        binding.seachSong.setOnClickListener{
+            binding.addSong.visibility = View.GONE
+            binding.deleteSong.visibility = View.GONE
+            binding.newSongId.visibility = View.VISIBLE
+
+
+        }
+
 
     }
 
