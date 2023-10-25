@@ -66,6 +66,7 @@ dependencies {
     // ADD retrofit + gson para la conversion de strings en json a objetos y viceversa
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.picasso:picasso:2.71828")
     // ADD para utilizar viewmodels
     api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 

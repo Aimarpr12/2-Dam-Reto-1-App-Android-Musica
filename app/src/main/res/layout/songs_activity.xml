@@ -106,7 +106,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/songs_list"
+        android:id="@+id/favourite_songs_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
