@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         app:title="@string/app_name" />
     <Button
-        android:id="@+id/add_department"
+        android:id="@+id/add_song"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -18,7 +18,7 @@
         android:text="@string/add_song" />
 
     <Button
-        android:id="@+id/update_department"
+        android:id="@+id/update_song"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -26,19 +26,82 @@
         android:text="@string/update_song" />
 
     <Button
-        android:id="@+id/delete_department"
+        android:id="@+id/delete_song"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_margin="16dp"
         android:text="@string/delete_song" />
 
+    <EditText
+        android:id="@+id/new_Song_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:ems="10"
+        android:hint="@string/new_Song_id"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:maxLines="1"
+        android:textSize="16dp"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/new_Song_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:ems="10"
+        android:hint="@string/new_Song_url"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:maxLines="1"
+        android:textSize="16dp"
+        android:visibility="gone" />
+
+
+    <EditText
+        android:id="@+id/new_Song_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:ems="10"
+        android:hint="@string/new_Song_title"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:maxLines="1"
+        android:textSize="16dp"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/new_Song_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="@string/new_Song_author"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:maxLines="1"
+        android:textSize="16dp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/add_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="16dp"
+        android:text="@string/add_list"
+        android:textSize="16dp"
+        android:visibility="gone" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/songs_list"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
 
