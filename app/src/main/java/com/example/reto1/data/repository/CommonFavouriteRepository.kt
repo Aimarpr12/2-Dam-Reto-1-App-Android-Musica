@@ -8,4 +8,6 @@ interface CommonFavouriteRepository {
 
     suspend fun deleteFavorites(id_song: Int, id_user: Int) : Resource<Integer>
 
+    suspend fun  createFavourite(favourite: Favourite) : Resource<Integer>
+
 }

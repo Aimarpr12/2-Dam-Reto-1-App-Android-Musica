@@ -4,7 +4,7 @@ import com.example.reto1.data.Song
 import com.example.reto1.utils.Resource
 
 interface CommonSongRepository {
-        suspend fun getSongs(): Resource<List<Song>>
+        suspend fun getSongs(id_user: Int): Resource<List<Song>>
         suspend fun createSong(song: Song): Resource<Integer>
 
 }

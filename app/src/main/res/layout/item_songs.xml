@@ -41,6 +41,6 @@
         android:layout_height="match_parent"
         android:backgroundTint="#FFFFFF"
         android:scaleType="centerCrop"
-        android:src="@drawable/favorito" />
+        android:src="@drawable/favorito_negro" />
 
 </LinearLayout>

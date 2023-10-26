@@ -6,13 +6,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
-import com.example.reto1.data.Song
 import androidx.lifecycle.Observer
+import com.example.reto1.R
+import com.example.reto1.data.Song
+import com.example.reto1.data.repository.remote.RemoteFavoritesDataSource
 import com.example.reto1.data.repository.remote.RemoteSongsDataSource
-
 import com.example.reto1.databinding.SongsActivityBinding
+import com.example.reto1.ui.favourites.FavouriteViewModel
+import com.example.reto1.ui.favourites.FavouritesViewModelFactory
 import com.example.reto1.utils.Resource
-import com.example.reto1.ui.songs.SongAdapter
 
 fun onSongsListClickItem(song: Song) {
     Log.i("PRUEBA1", "va2")
@@ -24,23 +26,24 @@ class SongActivity: ComponentActivity() {
 
     private lateinit var songAdapter: SongAdapter
     private val songRepository = RemoteSongsDataSource();
+    private val favouriteRepository = RemoteFavoritesDataSource()
     private val viewModel: SongsViewModel by viewModels {
         SongsViewModelFactory(songRepository)
     }
+    private val viewModelFav: FavouriteViewModel by viewModels {
+        FavouritesViewModelFactory(favouriteRepository)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setContentView(R.layout.songs_activity)
         val binding = SongsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        songAdapter = SongAdapter(::onSongsListClickItem)
+        songAdapter = SongAdapter(::onSongsListClickItem, viewModelFav::onFavoriteDeleteClick, viewModelFav::onFavoriteAddClick)
         // a la lista de empleados le incluyo el adapter de empleado
-        binding.songsList.adapter = songAdapter
+        binding.favouriteSongsList.adapter = songAdapter
 
         viewModel.items.observe(this, Observer {
-            // esto es lo que se ejecuta cada vez que la lista en el VM cambia de valor
-            Log.e("PruebasDia1", "ha ocurrido un cambio en la lista")
 
             when (it.status) {
                 Resource.Status.SUCCESS -> {
@@ -54,17 +57,15 @@ class SongActivity: ComponentActivity() {
                 }
 
                 Resource.Status.LOADING -> {
-                    // de momento
+
                 }
             }
-
-            //
         })
         viewModel.created.observe(this, Observer {
             when (it.status) {
 
                 Resource.Status.SUCCESS -> {
-                    viewModel.updateSongList()
+                    viewModel.updateSongList(1)
 
                     binding.seachSong.visibility = View.VISIBLE
                     binding.deleteSong.visibility = View.VISIBLE
@@ -73,16 +74,69 @@ class SongActivity: ComponentActivity() {
                     binding.newSongAuthor.visibility = View.GONE
                     binding.addList.visibility = View.GONE
                 }
+
                 Resource.Status.ERROR -> {
                     Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
                 }
+
                 Resource.Status.LOADING -> {
                     // de momento
                 }
             }
 
         })
-        binding.addSong.setOnClickListener () {
+
+        viewModelFav.deleted.observe(this, Observer {
+            when (it.status) {
+                Resource.Status.SUCCESS -> {
+                    Toast.makeText(
+                        this,
+                        "La canción " + it.data?.title + " ha sido eliminada de favoritos",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    viewModel.updateSongList(1);
+                }
+
+                Resource.Status.ERROR -> {
+                    Toast.makeText(
+                        this,
+                        "La canción " + it.data?.title + " no sido eliminada de favoritos",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                Resource.Status.LOADING -> {
+
+                }
+            }
+        })
+
+        viewModelFav.created.observe(this, Observer {
+            when (it.status) {
+                Resource.Status.SUCCESS -> {
+                    Toast.makeText(
+                        this,
+                        "La canción " + it.data?.title + " ha sido añadida de favoritos",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    viewModel.updateSongList(1);
+                }
+
+                Resource.Status.ERROR -> {
+                    Toast.makeText(
+                        this,
+                        "La canción " + it.data?.title + " no sido añadida de favoritos",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                Resource.Status.LOADING -> {
+
+                }
+            }
+        })
+
+        binding.addSong.setOnClickListener() {
             binding.seachSong.visibility = View.GONE
             binding.deleteSong.visibility = View.GONE
             binding.newSongUrl.visibility = View.VISIBLE
@@ -98,16 +152,13 @@ class SongActivity: ComponentActivity() {
                 )
             }
         }
-        binding.seachSong.setOnClickListener{
+        binding.seachSong.setOnClickListener {
             binding.addSong.visibility = View.GONE
             binding.deleteSong.visibility = View.GONE
             binding.newSongId.visibility = View.VISIBLE
 
 
         }
-
-
     }
-
 }
 

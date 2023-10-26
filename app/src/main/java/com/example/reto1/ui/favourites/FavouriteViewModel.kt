@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.reto1.data.CommonFavouriteRepository
+import com.example.reto1.data.Favourite
 import com.example.reto1.data.Song
 import com.example.reto1.utils.Resource
 import kotlinx.coroutines.Dispatchers
@@ -21,12 +22,15 @@ private val favouritesRepository: CommonFavouriteRepository
     private val idUser = 1;
 
     private val _items = MutableLiveData<Resource<List<Song>>>()
-
     val items : LiveData<Resource<List<Song>>> get() = _items
 
     private val _deleted = MutableLiveData<Resource<Song>>()
     val deleted : LiveData<Resource<Song>> get() = _deleted
-    // val delete: Int = _deleted.value!!.data.toString().toInt()
+
+    private val _created = MutableLiveData<Resource<Song>>()
+    val created : LiveData<Resource<Song>> get() = _created
+
+
     init {
         val id =1
         updateFavouriteList(id)
@@ -44,9 +48,10 @@ private val favouritesRepository: CommonFavouriteRepository
     }
     fun onFavoriteDeleteClick(song: Song) {
         viewModelScope.launch {
-            val response = deleteDepartment(song.id, idUser)
+            val response = deleteFavourite(song.id, 1)
             when (response.status){
                 Resource.Status.SUCCESS -> {
+                    //_delete.value = Resource.success(response.data.toString().toInt())
                     _deleted.value = Resource.success(song)
                 }
                 Resource.Status.ERROR -> {
@@ -56,14 +61,39 @@ private val favouritesRepository: CommonFavouriteRepository
 
                 }
             }
-            updateFavouriteList(idUser);
+            updateFavouriteList(idUser)
+        }
+    }
+
+    fun onFavoriteAddClick(song: Song) {
+        viewModelScope.launch {
+            val response = addFavourite(song.id, idUser)
+            when (response.status){
+                Resource.Status.SUCCESS -> {
+                    _created.value = Resource.success(song)
+                }
+                Resource.Status.ERROR -> {
+                    _created.value = response.message?.let { Resource.error(it, song) }
+                }
+                Resource.Status.LOADING -> {
+
+                }
+            }
+            updateFavouriteList(idUser)
         }
     }
 
 
-    suspend fun deleteDepartment(id_song : Int, id_user : Int):Resource<Integer>{
+    suspend fun deleteFavourite(id_song : Int, id_user : Int):Resource<Integer>{
         return withContext(Dispatchers.IO) {
             favouritesRepository.deleteFavorites(id_song, id_user)
+        }
+    }
+
+    suspend fun addFavourite(id_song : Int, id_user : Int):Resource<Integer>{
+        val fav = Favourite(0, id_user, id_song)
+        return withContext(Dispatchers.IO) {
+            favouritesRepository.createFavourite(fav)
         }
     }
 
