@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import com.example.reto1.data.Song
 import com.example.reto1.data.repository.CommonSongRepository
 import com.example.reto1.data.repository.remote.RemoteSongsDataSource
-import com.example.reto1.data.Song
 import com.example.reto1.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,28 +33,29 @@ class SongsViewModel (
     val created: LiveData<Resource<Integer>> get() = _created;
 
     init {
-        updateSongList()
+        updateSongList(1)
     }
 
-    fun updateSongList() {
+
+    fun updateSongList(id_user: Int) {
         viewModelScope.launch {
             // lista a mano
             // voy a llamar a la funcion
             // que va a solicitar los empleados del repositorio
-            val repoResponse = getSongsFromRepository();
+            val repoResponse = getSongsFromRepository(id_user);
             // cambiamos el valor de mutableLiveData
             _items.value = repoResponse
         }
     }
 
-    suspend fun getSongsFromRepository(): Resource<List<Song>> {
+    suspend fun getSongsFromRepository(id_user: Int): Resource<List<Song>> {
         return withContext(Dispatchers.IO) {
             // aqui unicamente llamamos a la funcion del repositorio
-            songRepository.getSongs()
+            songRepository.getSongs(id_user)
         }
     }
     fun onAddEmployee( url: String, title: String, author: String){
-        val newSong = Song( url, title, author)
+        val newSong = Song( url, title, author, false)
         viewModelScope.launch {
             _created.value = createNewSong(newSong)
         }

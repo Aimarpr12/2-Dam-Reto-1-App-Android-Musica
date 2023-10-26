@@ -1,6 +1,7 @@
 package com.example.reto1.ui.favourites
 
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
@@ -37,6 +38,10 @@ class FavouriteActivity : ComponentActivity() {
                 Resource.Status.SUCCESS -> {
                     if(!it.data.isNullOrEmpty()){
                         favouriteAdapter.submitList(it.data)
+                        findViewById<TextView>(R.id.textFavoritos).text = "Favoritos: " + it.data.size.toString()
+                    }else{
+                        favouriteAdapter.submitList(null)
+                        findViewById<TextView>(R.id.textFavoritos).text = "Favoritos: 0"
                     }
                 }
                 Resource.Status.ERROR -> {
