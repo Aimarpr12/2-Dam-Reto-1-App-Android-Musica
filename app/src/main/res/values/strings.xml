@@ -2,7 +2,7 @@
     <string name="app_name">reto1</string>
     <!-- Song -->
     <string name="add_song">Add song</string>
-    <string name="seach_song">Buscar song</string>
+    <string name="filter_song">Filtro</string>
     <string name="delete_song">Delete song</string>
     <string name="new_Song_url">añade la url</string>
     <string name="new_Song_title">nombre de la musica</string>
@@ -10,6 +10,8 @@
     <string name="add_list">add list Song</string>
     <string name="new_Song_id">añade id</string>
     <string name="seach_list_id">añade id</string>
+    <string name="seachAuthor">añade autor a buscar</string>
+    <string name="seachSong">añade cancion a buscar</string>
 
     <!-- Login -->
     <string name="login">Nombre de Usuario</string>
