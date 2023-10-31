@@ -79,8 +79,8 @@ class FavouriteActivity : ComponentActivity() {
                 val inflater = layoutInflater
                 val dialogView = inflater.inflate(R.layout.popup_filtro_layout, null)
 
-                dialogView.findViewById<TextView>(R.id.textView1).text = "Autor"
-                dialogView.findViewById<TextView>(R.id.textView2).text = "Cancion"
+                dialogView.findViewById<TextView>(R.id.textViewAutor).text = "Autor"
+                dialogView.findViewById<TextView>(R.id.textViewCancion).text = "Cancion"
 
                 builder.setView(dialogView)
 
