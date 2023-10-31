@@ -1,5 +1,6 @@
 package com.example.reto1.ui.favourites
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,9 +39,35 @@ private val favouritesRepository: CommonFavouriteRepository
 
     fun updateFavouriteList(id: Int){
         viewModelScope.launch {
-            val repoResponse = getFavouritesFromRepository();
-            _items.value = repoResponse
+            _items.value = getFavouritesFromRepository()
         }
+    }
+
+    fun filtrodeFavouriteList(autor: String?, cancion: String?){
+        val listFavFiltradas = mutableListOf<Song>()
+        if(!autor.isNullOrBlank() && !cancion.isNullOrBlank()){
+            _items.value?.data?.forEach { song ->
+                if(autor.equals(song.author, ignoreCase = true) && cancion.equals(song.title, ignoreCase = true)){
+                    listFavFiltradas.add(song)
+                }
+            }
+        }else if (!autor.isNullOrBlank() && cancion.isNullOrBlank()){
+           Log.d(autor, "cancion")
+            _items.value?.data?.forEach { song ->
+                if(autor.equals(song.author, ignoreCase = true)){
+                    Log.d(song.author,autor)
+                    listFavFiltradas.add(song)
+                }
+            }
+        }else {
+            _items.value?.data?.forEach { song ->
+                if(cancion.equals(song.title, ignoreCase = true)){
+                    listFavFiltradas.add(song)
+                }
+            }
+        }
+        val resource = Resource.success(listFavFiltradas)
+        _items.value = resource
     }
 
     fun onFavoriteViewHolderClick(song: Song) {

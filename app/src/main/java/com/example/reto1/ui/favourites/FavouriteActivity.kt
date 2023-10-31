@@ -1,6 +1,10 @@
 package com.example.reto1.ui.favourites
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -28,7 +32,8 @@ class FavouriteActivity : ComponentActivity() {
 
         val binding = FavouritesActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        setContentView(binding.root)
+        setContentView(binding.root)
 
         favouriteAdapter = FavouriteAdapter(viewModel::onFavoriteViewHolderClick, viewModel::onFavoriteDeleteClick)
         binding.listViewFavourites.adapter = favouriteAdapter
@@ -67,6 +72,44 @@ class FavouriteActivity : ComponentActivity() {
             }
         })
 
+        findViewById<Button>(R.id.buttonFiltros).setOnClickListener {
+            findViewById<Button>(R.id.buttonFiltros).setOnClickListener {
+                val builder = AlertDialog.Builder(this)
+
+                val inflater = layoutInflater
+                val dialogView = inflater.inflate(R.layout.popup_filtro_layout, null)
+
+                dialogView.findViewById<TextView>(R.id.textView1).text = "Autor"
+                dialogView.findViewById<TextView>(R.id.textView2).text = "Cancion"
+
+                builder.setView(dialogView)
+
+                builder.setPositiveButton("Aceptar") { _, _ ->
+                    if(!dialogView.findViewById<EditText>(R.id.editTextAutor).text.toString().isNullOrBlank() || !dialogView.findViewById<EditText>(R.id.editTextCancion).text.toString().isNullOrBlank()) {
+                        var autor = ""
+                        var cancion = ""
+
+                        if(!dialogView.findViewById<EditText>(R.id.editTextAutor).text.toString().isNullOrBlank() && dialogView.findViewById<EditText>(R.id.editTextCancion).text.toString().isNullOrBlank()){
+                            autor = dialogView.findViewById<EditText>(R.id.editTextAutor).text.toString()
+                        }else if(dialogView.findViewById<EditText>(R.id.editTextAutor).text.toString().isNullOrBlank() && !dialogView.findViewById<EditText>(R.id.editTextCancion).text.toString().isNullOrBlank()){
+                            cancion = dialogView.findViewById<EditText>(R.id.editTextCancion).text.toString()
+                        }else{
+                            autor = dialogView.findViewById<EditText>(R.id.editTextAutor).text.toString()
+                            cancion = dialogView.findViewById<EditText>(R.id.editTextCancion).text.toString()
+                        }
+                        Log.e("antes de pasar view model", autor + " " + cancion)
+                        viewModel.filtrodeFavouriteList(autor, cancion)
+                    }
+                }
+
+                builder.setNegativeButton("Cancelar") { _, _ ->
+
+                }
+                val dialog = builder.create()
+                dialog.show()
+            }
+
+        }
     }
 
 

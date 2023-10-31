@@ -29,5 +29,7 @@
     <string name="appName">MyTube</string>
     <string name="favoritos">Favoritos: </string>
     <string name="author">Autor</string>
-
+    <string name="filtros">Filtros</string>
+    <string name="Autor">Autor:</string>
+    <string name="cancion">Cancion:</string>
 </resources>
