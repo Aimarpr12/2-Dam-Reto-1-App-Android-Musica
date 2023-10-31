@@ -18,12 +18,12 @@
         android:text="@string/add_song" />
 
     <Button
-        android:id="@+id/seach_song"
+        android:id="@+id/filter_song"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_margin="16dp"
-        android:text="@string/seach_song" />
+        android:text="@string/filter_song" />
 
     <Button
         android:id="@+id/delete_song"
@@ -45,6 +45,7 @@
         android:maxLines="1"
         android:textSize="16dp"
         android:visibility="gone" />
+
     <Button
         android:id="@+id/seach_list_id"
         android:layout_width="wrap_content"

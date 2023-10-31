@@ -1,16 +1,22 @@
 package com.example.reto1.ui.songs
 
+
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.Observer
 import com.example.reto1.R
 import com.example.reto1.data.Song
 import com.example.reto1.data.repository.remote.RemoteFavoritesDataSource
 import com.example.reto1.data.repository.remote.RemoteSongsDataSource
+import com.example.reto1.databinding.FilterSongBinding
 import com.example.reto1.databinding.SongsActivityBinding
 import com.example.reto1.ui.favourites.FavouriteViewModel
 import com.example.reto1.ui.favourites.FavouritesViewModelFactory
@@ -67,7 +73,7 @@ class SongActivity: ComponentActivity() {
                 Resource.Status.SUCCESS -> {
                     viewModel.updateSongList(1)
 
-                    binding.seachSong.visibility = View.VISIBLE
+                    binding.filterSong.visibility = View.VISIBLE
                     binding.deleteSong.visibility = View.VISIBLE
                     binding.newSongUrl.visibility = View.GONE
                     binding.newSongTitle.visibility = View.GONE
@@ -137,7 +143,7 @@ class SongActivity: ComponentActivity() {
         })
 
         binding.addSong.setOnClickListener() {
-            binding.seachSong.visibility = View.GONE
+            binding.filterSong.visibility = View.GONE
             binding.deleteSong.visibility = View.GONE
             binding.newSongUrl.visibility = View.VISIBLE
             binding.newSongTitle.visibility = View.VISIBLE
@@ -152,11 +158,23 @@ class SongActivity: ComponentActivity() {
                 )
             }
         }
-        binding.seachSong.setOnClickListener {
+        binding.filterSong.setOnClickListener {
             binding.addSong.visibility = View.GONE
             binding.deleteSong.visibility = View.GONE
             binding.newSongId.visibility = View.VISIBLE
 
+            // Infla la vista de tu diálogo personalizado
+            val dialogView = FilterSongBinding.inflate(layoutInflater).root
+            // Configurar el AlertDialog
+            val builder = AlertDialog.Builder(this)
+            builder.setView(dialogView)
+
+            // Crear el AlertDialog
+            val alertDialog = builder.create()
+
+            // Mostrar el AlertDialog
+            alertDialog.show()
+          
 
         }
     }
