@@ -1,6 +1,8 @@
 package com.example.reto1.ui.favourites
 
 import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
@@ -32,7 +34,7 @@ class FavouriteActivity : ComponentActivity() {
         val binding = FavouritesActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        favouriteAdapter = FavouriteAdapter(viewModel::onFavoriteViewHolderClick, viewModel::onFavoriteDeleteClick)
+        favouriteAdapter = FavouriteAdapter(::onYTListener, viewModel::onFavoriteViewHolderClick, viewModel::onFavoriteDeleteClick)
         binding.listViewFavourites.adapter = favouriteAdapter
         viewModel.items.observe(this, Observer {
             // esto es lo que se ejecuta cada vez que la lista en el VM cambia de valor
@@ -98,5 +100,10 @@ class FavouriteActivity : ComponentActivity() {
         }
     }
 
-
+    private fun onYTListener(url: String) {
+        val webIntent: Intent = Uri.parse(url).let { webpage ->
+            Intent(Intent.ACTION_VIEW, webpage)
+        }
+        startActivity(webIntent)
+    }
 }
