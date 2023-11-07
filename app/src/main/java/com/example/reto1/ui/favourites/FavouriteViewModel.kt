@@ -1,6 +1,5 @@
 package com.example.reto1.ui.favourites
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,6 +22,8 @@ private val favouritesRepository: CommonFavouriteRepository
     private val idUser = 1;
 
     private val _items = MutableLiveData<Resource<List<Song>>>()
+
+    private lateinit var listaOriginal: List<Song>
     val items : LiveData<Resource<List<Song>>> get() = _items
 
     private val _deleted = MutableLiveData<Resource<Song>>()
@@ -33,37 +34,44 @@ private val favouritesRepository: CommonFavouriteRepository
 
 
     init {
-        val id =1
-        updateFavouriteList(id)
+        updateFavouriteList()
     }
 
-    fun updateFavouriteList(id: Int){
+    fun updateFavouriteList(){
         viewModelScope.launch {
             _items.value = getFavouritesFromRepository()
+
+            when (_items.value!!.status){
+                Resource.Status.SUCCESS -> {
+                    listaOriginal = ArrayList()
+                    val lista = _items.value!!.data!!
+                    if (lista != null) {
+                        for (song in lista) {
+                            (listaOriginal as ArrayList<Song>).add(song)
+                        }
+                    }
+                }
+                Resource.Status.ERROR -> {
+
+                }
+                Resource.Status.LOADING -> {
+
+                }
+            }
         }
     }
 
     fun filtrodeFavouriteList(autor: String?, cancion: String?){
         val listFavFiltradas = mutableListOf<Song>()
-        if(!autor.isNullOrBlank() && !cancion.isNullOrBlank()){
-            _items.value?.data?.forEach { song ->
-                if(autor.equals(song.author, ignoreCase = true) && cancion.equals(song.title, ignoreCase = true)){
-                    listFavFiltradas.add(song)
-                }
+        listaOriginal.forEach { song ->
+            if((song.author.lowercase().indexOf(autor!!.lowercase(), 0)) != -1
+                && (song.title.lowercase().indexOf(cancion!!.lowercase(), 0)) != -1) {
+                listFavFiltradas.add(song)
             }
-        }else if (!autor.isNullOrBlank() && cancion.isNullOrBlank()){
-           Log.d(autor, "cancion")
-            _items.value?.data?.forEach { song ->
-                if(autor.equals(song.author, ignoreCase = true)){
-                    Log.d(song.author,autor)
-                    listFavFiltradas.add(song)
-                }
-            }
-        }else {
-            _items.value?.data?.forEach { song ->
-                if(cancion.equals(song.title, ignoreCase = true)){
-                    listFavFiltradas.add(song)
-                }
+        }
+        if (listFavFiltradas.size == 0) {
+            for (song in listaOriginal) {
+                listFavFiltradas.add(song)
             }
         }
         val resource = Resource.success(listFavFiltradas)
@@ -73,12 +81,12 @@ private val favouritesRepository: CommonFavouriteRepository
     fun onFavoriteViewHolderClick(song: Song) {
         // cuando se hace click
     }
+
     fun onFavoriteDeleteClick(song: Song) {
         viewModelScope.launch {
             val response = deleteFavourite(song.id, 1)
             when (response.status){
                 Resource.Status.SUCCESS -> {
-                    //_delete.value = Resource.success(response.data.toString().toInt())
                     _deleted.value = Resource.success(song)
                 }
                 Resource.Status.ERROR -> {
@@ -88,7 +96,7 @@ private val favouritesRepository: CommonFavouriteRepository
 
                 }
             }
-            updateFavouriteList(idUser)
+            updateFavouriteList()
         }
     }
 
@@ -106,10 +114,9 @@ private val favouritesRepository: CommonFavouriteRepository
 
                 }
             }
-            updateFavouriteList(idUser)
+            updateFavouriteList()
         }
     }
-
 
     suspend fun deleteFavourite(id_song : Int, id_user : Int):Resource<Integer>{
         return withContext(Dispatchers.IO) {
@@ -129,9 +136,8 @@ private val favouritesRepository: CommonFavouriteRepository
             favouritesRepository.getFavorites()
         }
     }
-
-
 }
+
 class FavouritesViewModelFactory(
     private val favouriteRepository: CommonFavouriteRepository
 ): ViewModelProvider.Factory {
