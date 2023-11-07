@@ -13,6 +13,7 @@ import com.example.reto1.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.math.log
 
 class SongsViewModelFactory(
     private val songRepository: RemoteSongsDataSource
@@ -27,6 +28,7 @@ class SongsViewModel (
 ) : ViewModel(){
 
     private val _items = MutableLiveData<Resource<List<Song>>>()
+    private lateinit var listaOriginal: List<Song>
     val items: LiveData<Resource<List<Song>>> get() = _items
 
     private val _created = MutableLiveData<Resource<Integer>>()
@@ -47,7 +49,41 @@ class SongsViewModel (
         viewModelScope.launch {
             val repoResponse = getSongsFromRepository(id_user);
             _items.value = repoResponse
+            when (_items.value!!.status){
+                Resource.Status.SUCCESS -> {
+                    listaOriginal = ArrayList()
+                    val lista = _items.value!!.data!!
+                    if (lista != null) {
+                        for (song in lista) {
+                            (listaOriginal as ArrayList<Song>).add(song)
+                        }
+                    }
+                }
+                Resource.Status.ERROR -> {
+
+                }
+                Resource.Status.LOADING -> {
+
+                }
+            }
         }
+    }
+    fun filtrodeSongList(autor: String?, cancion: String?){
+        val listFavFiltradas = mutableListOf<Song>()
+
+        listaOriginal.forEach { song ->
+            if((song.author.lowercase().indexOf(autor!!.lowercase(), 0)) != -1
+                && (song.title.lowercase().indexOf(cancion!!.lowercase(), 0)) != -1) {
+                listFavFiltradas.add(song)
+            }
+        }
+        if (listFavFiltradas.size == 0) {
+            for (song in listaOriginal) {
+                listFavFiltradas.add(song)
+            }
+        }
+        val resource = Resource.success(listFavFiltradas)
+        _items.value = resource
     }
 
     suspend fun getSongsFromRepository(id_user: Int): Resource<List<Song>> {

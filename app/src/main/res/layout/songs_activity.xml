@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="@string/app_name" />
+
     <Button
         android:id="@+id/add_song"
         android:layout_width="wrap_content"
@@ -24,6 +25,15 @@
         android:layout_gravity="end"
         android:layout_margin="16dp"
         android:text="@string/filter_song" />
+    <TextView
+        android:id="@+id/songs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/songs"
+        app:layout_constraintBottom_toTopOf="@+id/listViewFavourites"
+        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.807" />
 
     <Button
         android:id="@+id/delete_song"
@@ -33,28 +43,7 @@
         android:layout_margin="16dp"
         android:text="@string/delete_song" />
 
-    <EditText
-        android:id="@+id/new_Song_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:ems="10"
-        android:hint="@string/new_Song_id"
-        android:imeOptions="actionDone"
-        android:inputType="text"
-        android:maxLines="1"
-        android:textSize="16dp"
-        android:visibility="gone" />
 
-    <Button
-        android:id="@+id/seach_list_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_margin="16dp"
-        android:text="@string/seach_list_id"
-        android:textSize="16dp"
-        android:visibility="gone" />
 
     <EditText
         android:id="@+id/new_Song_url"
@@ -102,15 +91,6 @@
         android:layout_gravity="end"
         android:layout_margin="16dp"
         android:text="@string/add_list"
-        android:textSize="16dp"
-        android:visibility="gone" />
-    <Button
-        android:id="@+id/delete_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_margin="16dp"
-        android:text="@string/delete_list"
         android:textSize="16dp"
         android:visibility="gone" />
 

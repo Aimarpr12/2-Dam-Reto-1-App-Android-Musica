@@ -1,10 +1,14 @@
 package com.example.reto1.ui.songs
 
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
@@ -55,8 +59,17 @@ class SongActivity: ComponentActivity() {
                 Resource.Status.SUCCESS -> {
                     if (!it.data.isNullOrEmpty()) {
                         songAdapter.submitList(it.data)
+
+                        findViewById<TextView>(R.id.songs).text =
+                            "Songs: " + it.data.size.toString()
                     }
+
+                else{
+
+                    songAdapter.submitList(null)
+                    findViewById<TextView>(R.id.songs).text = "Favoritos: 0"
                 }
+            }
 
                 Resource.Status.ERROR -> {
                     Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
@@ -174,21 +187,32 @@ class SongActivity: ComponentActivity() {
             }
         }
         binding.filterSong.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
 
+            val inflater = layoutInflater
+            val dialogView = inflater.inflate(R.layout.popup_filtro_layout, null)
 
+            dialogView.findViewById<TextView>(R.id.textViewAutor).text = "Autor"
+            dialogView.findViewById<TextView>(R.id.textViewCancion).text = "Cancion"
+
+            builder.setView(dialogView)
+
+            builder.setPositiveButton("Aceptar") { _, _ ->
+
+                val autor = dialogView.findViewById<EditText>(R.id.editTextAutor).text.toString()
+                val cancion = dialogView.findViewById<EditText>(R.id.editTextCancion).text.toString()
+
+                viewModel.filtrodeSongList(autor, cancion)
+            }
+            builder.setNegativeButton("Cancelar") { _, _ ->
+
+            }
+            val dialog = builder.create()
+            dialog.show()
         }
-        binding.deleteSong.setOnClickListener {
-            /*binding.addList.visibility = View.GONE
-            binding.filterSong.visibility = View.GONE
-            binding.deleteSong.visibility = View.GONE
-            binding.newSongTitle.visibility = View.VISIBLE
-            binding.deleteList.visibility = View.VISIBLE
-            binding.deleteList.setOnClickListener() {
-                viewModel.onDeleteSong(
-                    binding.newSongTitle.text.toString(),
-                )
 
-            }*/
+
+        binding.deleteSong.setOnClickListener {
 
             if(selectedSong.id != 0){
                 viewModel.onDeleteSong(
