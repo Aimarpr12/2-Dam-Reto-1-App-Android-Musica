@@ -2,9 +2,13 @@ package com.example.reto1.ui.favourites
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.text.Html
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -37,16 +41,12 @@ class FavouriteActivity : ComponentActivity() {
         favouriteAdapter = FavouriteAdapter(::onYTListener, viewModel::onFavoriteViewHolderClick, viewModel::onFavoriteDeleteClick)
         binding.listViewFavourites.adapter = favouriteAdapter
         viewModel.items.observe(this, Observer {
-            // esto es lo que se ejecuta cada vez que la lista en el VM cambia de valor
-            Log.i("lista", "llegado")
             when (it.status){
                 Resource.Status.SUCCESS -> {
                     if(!it.data.isNullOrEmpty()){
-                        Log.i("lista", "llegado1" + it.data.size)
                         favouriteAdapter.submitList(it.data)
                         findViewById<TextView>(R.id.textFavoritos).text = "Favoritos: " + it.data.size.toString()
                     }else{
-                        Log.i("lista", "llegado2")
                         favouriteAdapter.submitList(null)
                         findViewById<TextView>(R.id.textFavoritos).text = "Favoritos: 0"
                     }
@@ -63,10 +63,28 @@ class FavouriteActivity : ComponentActivity() {
         viewModel.deleted.observe(this, Observer {
             when (it.status){
                 Resource.Status.SUCCESS -> {
-                    Toast.makeText(this, "La canción " + it.data?.title + " ha sido eliminada de favoritos", Toast.LENGTH_LONG).show()
+                    val title = it.data?.title
+                    val message = "La canción <b>$title</b> ha sido eliminada de favoritos"
+
+                    val spannableMessage = SpannableStringBuilder(Html.fromHtml(message))
+                    if (title != null) {
+                        spannableMessage.setSpan(StyleSpan(Typeface.BOLD), 15, 15 + title.length ?: 0, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    }
+
+                    val toast = Toast.makeText(this, spannableMessage, Toast.LENGTH_LONG)
+                    toast.show()
                 }
                 Resource.Status.ERROR -> {
-                    Toast.makeText(this, "La canción " + it.data?.title +" no sido eliminada de favoritos", Toast.LENGTH_LONG).show()
+                    val title = it.data?.title
+                    val message = "La canción <b>$title</b> no ha sido eliminada de favoritos"
+
+                    val spannableMessage = SpannableStringBuilder(Html.fromHtml(message))
+                    if (title != null) {
+                        spannableMessage.setSpan(StyleSpan(Typeface.BOLD), 15, 15 + title.length ?: 0, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    }
+
+                    val toast = Toast.makeText(this, spannableMessage, Toast.LENGTH_LONG)
+                    toast.show()
                 }
                 Resource.Status.LOADING -> {
 
