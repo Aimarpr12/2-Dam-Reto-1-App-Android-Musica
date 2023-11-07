@@ -75,22 +75,22 @@ class FavouriteActivity : ComponentActivity() {
         })
 
         binding.buttonFiltros.setOnClickListener {
-                val builder = AlertDialog.Builder(this)
+            val builder = AlertDialog.Builder(this)
 
-                val inflater = layoutInflater
-                val dialogView = inflater.inflate(R.layout.popup_filtro_layout, null)
+            val inflater = layoutInflater
+            val dialogView = inflater.inflate(R.layout.popup_filtro_layout, null)
 
-                dialogView.findViewById<TextView>(R.id.textViewAutor).text = "Autor"
-                dialogView.findViewById<TextView>(R.id.textViewCancion).text = "Cancion"
+            dialogView.findViewById<TextView>(R.id.textViewAutor).text = "Autor"
+            dialogView.findViewById<TextView>(R.id.textViewCancion).text = "Cancion"
 
-                builder.setView(dialogView)
+            builder.setView(dialogView)
 
-                builder.setPositiveButton("Aceptar") { _, _ ->
+            builder.setPositiveButton("Aceptar") { _, _ ->
 
-                    val autor = dialogView.findViewById<EditText>(R.id.editTextAutor).text.toString()
-                    val cancion = dialogView.findViewById<EditText>(R.id.editTextCancion).text.toString()
+                val autor = dialogView.findViewById<EditText>(R.id.editTextAutor).text.toString()
+                val cancion = dialogView.findViewById<EditText>(R.id.editTextCancion).text.toString()
 
-                    viewModel.filtrodeFavouriteList(autor, cancion)
+                viewModel.filtrodeFavouriteList(autor, cancion)
             }
             builder.setNegativeButton("Cancelar") { _, _ ->
 
