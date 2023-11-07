@@ -2,11 +2,13 @@ package com.example.reto1.data.repository.remote
 
 import com.example.reto1.data.Favourite
 import com.example.reto1.data.Song
+import com.example.reto1.data.User
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface APIInterface {
@@ -29,6 +31,19 @@ interface APIInterface {
 
     @POST("fav")
     suspend fun createFavourite(@Body favourite: Favourite): Response<Integer>
+
+    @POST("auth/login")
+    suspend fun loginUser(@Body user: User): Response<Void>
+
+    @POST("auth/register")
+    suspend fun registerUser(@Body user: User): Response<Void>
+
+    @PUT("auth/changePassword")
+    suspend fun changePassword(@Body user: User): Response<Void>
+
+    @GET("auth/me")
+    suspend fun getUser(): Response<User>
+
 
 
 
