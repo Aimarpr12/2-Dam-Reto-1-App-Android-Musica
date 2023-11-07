@@ -14,4 +14,6 @@ data class Song(
 ): Parcelable {
         constructor(url: String, title: String, author: String, favorite: Boolean ) : this(0, url, title, author, favorite) {
         }
+        constructor() : this(0, "", "", "", false) {
+        }
     }

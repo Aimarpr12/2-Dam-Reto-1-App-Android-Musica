@@ -30,6 +30,8 @@ interface APIInterface {
     @POST("fav")
     suspend fun createFavourite(@Body favourite: Favourite): Response<Integer>
 
+    @DELETE("songs/{id}")
+    suspend fun deleteSong(@Path("id") id: Int): Response<Integer>
 
 
 }

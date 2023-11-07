@@ -1,6 +1,5 @@
 package com.example.reto1.ui.songs
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,12 +29,13 @@ class SongsViewModel (
     private val _items = MutableLiveData<Resource<List<Song>>>()
     val items: LiveData<Resource<List<Song>>> get() = _items
 
-    private val _created = MutableLiveData<Resource<Integer>>();
-    val created: LiveData<Resource<Integer>> get() = _created;
+    private val _created = MutableLiveData<Resource<Integer>>()
+    val created: LiveData<Resource<Integer>> get() = _created
 
-    private val _delete = MutableLiveData<Resource<Song>>();
-    val deleted: LiveData<Resource<Song>> get() = _delete;
+    private val _delete = MutableLiveData<Resource<Integer>>()
+    val deleted: LiveData<Resource<Integer>> get() = _delete
 
+    var deletedName: String = "";
     init {
         updateSongList(1)
     }
@@ -45,18 +45,13 @@ class SongsViewModel (
 
     fun updateSongList(id_user: Int) {
         viewModelScope.launch {
-            // lista a mano
-            // voy a llamar a la funcion
-            // que va a solicitar los empleados del repositorio
             val repoResponse = getSongsFromRepository(id_user);
-            // cambiamos el valor de mutableLiveData
             _items.value = repoResponse
         }
     }
 
     suspend fun getSongsFromRepository(id_user: Int): Resource<List<Song>> {
         return withContext(Dispatchers.IO) {
-            // aqui unicamente llamamos a la funcion del repositorio
             songRepository.getSongs(id_user)
         }
     }
@@ -67,15 +62,22 @@ class SongsViewModel (
         }
     }
 
+    fun onDeleteSong(song: Song){
+        viewModelScope.launch {
+            _delete.value = deleteSong(song.id)
+            deletedName = song.title
+        }
+    }
+
     suspend fun createNewSong(song: Song): Resource<Integer> {
         return withContext(Dispatchers.IO) {
             songRepository.createSong(song)
         }
 
     }
-    fun deleteSong(title: String): Resource<Integer> {
+    suspend fun deleteSong(id: Int): Resource<Integer> {
         return withContext(Dispatchers.IO) {
-            songRepository.deleteSong(title)
+            songRepository.deleteSong(id)
         }
 
     }

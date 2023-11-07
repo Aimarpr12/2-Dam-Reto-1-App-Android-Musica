@@ -1,32 +1,26 @@
 package com.example.reto1.ui.songs
 
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AlertDialog
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.reto1.R
 import com.example.reto1.data.Song
 import com.example.reto1.data.repository.remote.RemoteFavoritesDataSource
 import com.example.reto1.data.repository.remote.RemoteSongsDataSource
-import com.example.reto1.databinding.FilterSongBinding
 import com.example.reto1.databinding.SongsActivityBinding
 import com.example.reto1.ui.favourites.FavouriteViewModel
 import com.example.reto1.ui.favourites.FavouritesViewModelFactory
 import com.example.reto1.utils.Resource
 
+private var selectedSong : Song = Song()
 fun onSongsListClickItem(song: Song) {
-    Log.i("PRUEBA1", "va2")
-    Log.i("PRUEBA1", song.title)
-
+    selectedSong = song
 }
 
 class SongActivity: ComponentActivity() {
@@ -47,6 +41,7 @@ class SongActivity: ComponentActivity() {
         setContentView(binding.root)
 
         songAdapter = SongAdapter(
+            ::onYTListener,
             ::onSongsListClickItem,
             viewModelFav::onFavoriteDeleteClick,
             viewModelFav::onFavoriteAddClick
@@ -99,10 +94,12 @@ class SongActivity: ComponentActivity() {
         viewModel.deleted.observe(this, Observer {
             when (it.status){
                 Resource.Status.SUCCESS -> {
-                    Toast.makeText(this, "La canción " + it.data?.title + " ha sido eliminada de favoritos", Toast.LENGTH_LONG).show()
+
+                    Toast.makeText(this, "La canción " + viewModel.deletedName + " ha sido eliminada de favoritos", Toast.LENGTH_LONG).show()
+                    viewModel.updateSongList(1);
                 }
                 Resource.Status.ERROR -> {
-                    Toast.makeText(this, "La canción " + it.data?.title +" no sido eliminada de favoritos", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "La canción " + viewModel.deletedName +" no sido eliminada de favoritos", Toast.LENGTH_LONG).show()
                 }
                 Resource.Status.LOADING -> {
 
@@ -177,23 +174,43 @@ class SongActivity: ComponentActivity() {
             }
         }
         binding.filterSong.setOnClickListener {
-           //filtro
+
 
         }
         binding.deleteSong.setOnClickListener {
-            binding.addList.visibility = View.GONE
+            /*binding.addList.visibility = View.GONE
             binding.filterSong.visibility = View.GONE
             binding.deleteSong.visibility = View.GONE
             binding.newSongTitle.visibility = View.VISIBLE
             binding.deleteList.visibility = View.VISIBLE
             binding.deleteList.setOnClickListener() {
-                viewModel.deleteSong(
+                viewModel.onDeleteSong(
                     binding.newSongTitle.text.toString(),
                 )
 
+            }*/
+
+            if(selectedSong.id != 0){
+                viewModel.onDeleteSong(
+                    selectedSong,
+                )
+            }else{
+                Toast.makeText(
+                    this,
+                    "Selecciona una cancion para eliminar",
+                    Toast.LENGTH_LONG
+                ).show()
             }
 
+
         }
+    }
+
+    private fun onYTListener(url: String) {
+        val webIntent: Intent = Uri.parse(url).let { webpage ->
+            Intent(Intent.ACTION_VIEW, webpage)
+        }
+        startActivity(webIntent)
     }
 }
 

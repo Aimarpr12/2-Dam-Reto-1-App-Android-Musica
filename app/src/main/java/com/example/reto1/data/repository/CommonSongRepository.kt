@@ -6,6 +6,6 @@ import com.example.reto1.utils.Resource
 interface CommonSongRepository {
         suspend fun getSongs(id_user: Int): Resource<List<Song>>
         suspend fun createSong(song: Song): Resource<Integer>
-        suspend fun deleteSong(title: String): Resource<Integer>
+        suspend fun deleteSong(id: Int): Resource<Integer>
 
 }
