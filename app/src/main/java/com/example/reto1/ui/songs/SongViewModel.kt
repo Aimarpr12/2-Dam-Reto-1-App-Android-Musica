@@ -1,5 +1,6 @@
 package com.example.reto1.ui.songs
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -32,9 +33,14 @@ class SongsViewModel (
     private val _created = MutableLiveData<Resource<Integer>>();
     val created: LiveData<Resource<Integer>> get() = _created;
 
+    private val _delete = MutableLiveData<Resource<Song>>();
+    val deleted: LiveData<Resource<Song>> get() = _delete;
+
     init {
         updateSongList(1)
     }
+
+
 
 
     fun updateSongList(id_user: Int) {
@@ -54,18 +60,23 @@ class SongsViewModel (
             songRepository.getSongs(id_user)
         }
     }
-    fun onAddEmployee( url: String, title: String, author: String){
+    fun onAddSong( url: String, title: String, author: String){
         val newSong = Song( url, title, author, false)
         viewModelScope.launch {
             _created.value = createNewSong(newSong)
         }
     }
+
     suspend fun createNewSong(song: Song): Resource<Integer> {
         return withContext(Dispatchers.IO) {
             songRepository.createSong(song)
         }
 
     }
-
+    fun deleteSong(title: String): Resource<Integer> {
+        return withContext(Dispatchers.IO) {
+            songRepository.deleteSong(title)
+        }
 
     }
+}

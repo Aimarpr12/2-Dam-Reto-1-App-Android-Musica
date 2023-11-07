@@ -104,6 +104,15 @@
         android:text="@string/add_list"
         android:textSize="16dp"
         android:visibility="gone" />
+    <Button
+        android:id="@+id/delete_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="16dp"
+        android:text="@string/delete_list"
+        android:textSize="16dp"
+        android:visibility="gone" />
 
 
     <androidx.recyclerview.widget.RecyclerView

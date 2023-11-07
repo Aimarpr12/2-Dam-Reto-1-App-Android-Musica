@@ -7,9 +7,11 @@ import androidx.appcompat.app.AlertDialog
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.activity.viewModels
+import androidx.core.app.ComponentActivity
+
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.Observer
 import com.example.reto1.R
@@ -45,7 +47,11 @@ class SongActivity: ComponentActivity() {
         val binding = SongsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        songAdapter = SongAdapter(::onSongsListClickItem, viewModelFav::onFavoriteDeleteClick, viewModelFav::onFavoriteAddClick)
+        songAdapter = SongAdapter(
+            ::onSongsListClickItem,
+            viewModelFav::onFavoriteDeleteClick,
+            viewModelFav::onFavoriteAddClick
+        )
         // a la lista de empleados le incluyo el adapter de empleado
         binding.favouriteSongsList.adapter = songAdapter
 
@@ -90,6 +96,19 @@ class SongActivity: ComponentActivity() {
                 }
             }
 
+        })
+        viewModel.deleted.observe(this, Observer {
+            when (it.status){
+                Resource.Status.SUCCESS -> {
+                    Toast.makeText(this, "La canción " + it.data?.title + " ha sido eliminada de favoritos", Toast.LENGTH_LONG).show()
+                }
+                Resource.Status.ERROR -> {
+                    Toast.makeText(this, "La canción " + it.data?.title +" no sido eliminada de favoritos", Toast.LENGTH_LONG).show()
+                }
+                Resource.Status.LOADING -> {
+
+                }
+            }
         })
 
         viewModelFav.deleted.observe(this, Observer {
@@ -151,7 +170,7 @@ class SongActivity: ComponentActivity() {
             binding.addList.visibility = View.VISIBLE
 
             binding.addList.setOnClickListener() {
-                viewModel.onAddEmployee(
+                viewModel.onAddSong(
                     binding.newSongUrl.text.toString(),
                     binding.newSongTitle.text.toString(),
                     binding.newSongAuthor.text.toString()
@@ -159,22 +178,21 @@ class SongActivity: ComponentActivity() {
             }
         }
         binding.filterSong.setOnClickListener {
-            binding.addSong.visibility = View.GONE
+           //filtro
+
+        }
+        binding.deleteSong.setOnClickListener {
+            binding.addList.visibility = View.GONE
+            binding.filterSong.visibility = View.GONE
             binding.deleteSong.visibility = View.GONE
-            binding.newSongId.visibility = View.VISIBLE
+            binding.newSongTitle.visibility = View.VISIBLE
+            binding.deleteList.visibility = View.VISIBLE
+            binding.deleteList.setOnClickListener() {
+                viewModel.deleteSong(
+                    binding.newSongTitle.text.toString(),
+                )
 
-            // Infla la vista de tu diálogo personalizado
-            val dialogView = FilterSongBinding.inflate(layoutInflater).root
-            // Configurar el AlertDialog
-            val builder = AlertDialog.Builder(this)
-            builder.setView(dialogView)
-
-            // Crear el AlertDialog
-            val alertDialog = builder.create()
-
-            // Mostrar el AlertDialog
-            alertDialog.show()
-          
+            }
 
         }
     }
