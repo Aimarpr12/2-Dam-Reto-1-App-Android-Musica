@@ -10,7 +10,6 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.core.app.ComponentActivity
 
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.Observer
