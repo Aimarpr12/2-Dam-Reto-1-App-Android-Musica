@@ -19,11 +19,17 @@
     <string name="button_login">Conectarse</string>
 
     <!-- Register -->
+    <string name="noequalpassword">Las contraseñas no son iguales</string>
     <string name="repeat_password">Repita la contraseña</string>
     <string name="email">Correo Electronico</string>
     <string name="name">Nombre</string>
     <string name="surname">Apellido</string>
     <string name="button_register">Registrarse</string>
+
+    <!-- Change Password -->
+    <string name="change_password">Cambiar contraseña</string>
+    <string name="current_password">Contraseña actual</string>
+    <string name="new_password">Nueva contraseña</string>
 
 
     <!-- Favourite -->

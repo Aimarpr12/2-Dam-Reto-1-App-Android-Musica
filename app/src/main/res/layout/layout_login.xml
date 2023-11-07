@@ -30,21 +30,21 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/register_loginText"
+            android:id="@+id/Login_usernameText"
             android:layout_width="138dp"
             android:layout_height="62dp"
             android:text="@string/login"
             android:textAlignment="center"
             android:textSize="28dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/register_login"
+            app:layout_constraintEnd_toStartOf="@+id/login"
             app:layout_constraintHorizontal_bias="0.658"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.169" />
 
         <EditText
-            android:id="@+id/register_login"
+            android:id="@+id/login"
             android:layout_width="215dp"
             android:layout_height="60dp"
             android:ems="10"
@@ -58,21 +58,21 @@
             app:layout_constraintVertical_bias="0.169" />
 
         <TextView
-            android:id="@+id/register_password1TextView"
+            android:id="@+id/login_passwordTextView"
             android:layout_width="166dp"
             android:layout_height="38dp"
             android:text="@string/password"
             android:textAlignment="textEnd"
             android:textSize="28sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/register_password1"
+            app:layout_constraintEnd_toStartOf="@+id/login_password"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.28" />
 
         <EditText
-            android:id="@+id/register_password1"
+            android:id="@+id/login_password"
             android:layout_width="215dp"
             android:layout_height="60dp"
             android:ems="10"
