@@ -57,7 +57,7 @@ class FavouriteAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(song: Song) {
-            binding.TextViewName.text = song.title
+            binding.TextViewName.text = song.title.replace(Regex("\\(.*?\\)"), "")
             binding.TextViewAuthor.text = song.author
             val videoUrl = song.url // URL del video de YouTube
             val videoId = videoUrl.substring(videoUrl.indexOf("=") + 1) // Extraer el ID del video
