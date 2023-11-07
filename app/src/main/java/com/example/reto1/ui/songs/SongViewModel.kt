@@ -29,43 +29,56 @@ class SongsViewModel (
     private val _items = MutableLiveData<Resource<List<Song>>>()
     val items: LiveData<Resource<List<Song>>> get() = _items
 
-    private val _created = MutableLiveData<Resource<Integer>>();
-    val created: LiveData<Resource<Integer>> get() = _created;
+    private val _created = MutableLiveData<Resource<Integer>>()
+    val created: LiveData<Resource<Integer>> get() = _created
 
+    private val _delete = MutableLiveData<Resource<Integer>>()
+    val deleted: LiveData<Resource<Integer>> get() = _delete
+
+    var deletedName: String = "";
     init {
         updateSongList(1)
     }
 
 
+
+
     fun updateSongList(id_user: Int) {
         viewModelScope.launch {
-            // lista a mano
-            // voy a llamar a la funcion
-            // que va a solicitar los empleados del repositorio
             val repoResponse = getSongsFromRepository(id_user);
-            // cambiamos el valor de mutableLiveData
             _items.value = repoResponse
         }
     }
 
     suspend fun getSongsFromRepository(id_user: Int): Resource<List<Song>> {
         return withContext(Dispatchers.IO) {
-            // aqui unicamente llamamos a la funcion del repositorio
             songRepository.getSongs(id_user)
         }
     }
-    fun onAddEmployee( url: String, title: String, author: String){
+    fun onAddSong( url: String, title: String, author: String){
         val newSong = Song( url, title, author, false)
         viewModelScope.launch {
             _created.value = createNewSong(newSong)
         }
     }
+
+    fun onDeleteSong(song: Song){
+        viewModelScope.launch {
+            _delete.value = deleteSong(song.id)
+            deletedName = song.title
+        }
+    }
+
     suspend fun createNewSong(song: Song): Resource<Integer> {
         return withContext(Dispatchers.IO) {
             songRepository.createSong(song)
         }
 
     }
-
+    suspend fun deleteSong(id: Int): Resource<Integer> {
+        return withContext(Dispatchers.IO) {
+            songRepository.deleteSong(id)
+        }
 
     }
+}

@@ -1,15 +1,9 @@
 package com.example.reto1.ui.favourites
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.graphics.Color
-import android.net.Uri
-import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -17,16 +11,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.reto1.R
 import com.example.reto1.data.Song
 import com.example.reto1.databinding.ItemSongsBinding
-import com.example.reto1.utils.Resource
 import com.squareup.picasso.Picasso
 
 
 class FavouriteAdapter(
+    private val onYTListener: (String) -> Unit,
     private val onClickListener: (Song) -> Unit,
     private val onFavoriteClickListener: (Song) -> Unit,
 ) : ListAdapter<Song, FavouriteAdapter.FavouriteViewHolder>(FavouriteDiffCallback()) {
 
-    private var selectedPosition: Int = RecyclerView.NO_POSITION
+    var selectedPosition: Int = RecyclerView.NO_POSITION
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteViewHolder {
         val binding = ItemSongsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FavouriteViewHolder(binding)
@@ -49,7 +43,6 @@ class FavouriteAdapter(
                 notifyItemChanged(previousSelectedPosition)
                 notifyItemChanged(position)
 
-                // Llamar al método onItemClick de la interfaz cuando se hace clic en un departamento
                 onClickListener(song)
             }
         }
@@ -60,7 +53,7 @@ class FavouriteAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(song: Song) {
-            binding.TextViewName.text = song.title
+            binding.TextViewName.text = song.title.replace(Regex("\\(.*?\\)"), "")
             binding.TextViewAuthor.text = song.author
             val videoUrl = song.url // URL del video de YouTube
             val videoId = videoUrl.substring(videoUrl.indexOf("=") + 1) // Extraer el ID del video
@@ -79,15 +72,7 @@ class FavouriteAdapter(
             binding.imageButtonFav.layoutParams = layoutParams
 
             binding.imageButtonYT.setOnClickListener {
-
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.data = Uri.parse(videoUrl)
-
-                if (intent.resolveActivity(binding.root.context.packageManager) != null) {
-                    binding.root.context.startActivity(intent)
-                } else {
-                    Toast.makeText(binding.root.context, "No se encontró una aplicación para abrir la URL.", Toast.LENGTH_SHORT).show()
-                }
+                onYTListener(videoUrl)
             }
             binding.imageButtonFav.setOnClickListener {
                 val builder = AlertDialog.Builder(binding.root.context)
@@ -108,7 +93,6 @@ class FavouriteAdapter(
 
         }
     }
-
     class FavouriteDiffCallback : DiffUtil.ItemCallback<Song>() {
 
         override fun areItemsTheSame(oldItem: Song, newItem: Song): Boolean {

@@ -1,31 +1,26 @@
 package com.example.reto1.ui.songs
 
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AlertDialog
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.Observer
 import com.example.reto1.R
 import com.example.reto1.data.Song
 import com.example.reto1.data.repository.remote.RemoteFavoritesDataSource
 import com.example.reto1.data.repository.remote.RemoteSongsDataSource
-import com.example.reto1.databinding.FilterSongBinding
 import com.example.reto1.databinding.SongsActivityBinding
 import com.example.reto1.ui.favourites.FavouriteViewModel
 import com.example.reto1.ui.favourites.FavouritesViewModelFactory
 import com.example.reto1.utils.Resource
 
+private var selectedSong : Song = Song()
 fun onSongsListClickItem(song: Song) {
-    Log.i("PRUEBA1", "va2")
-    Log.i("PRUEBA1", song.title)
-
+    selectedSong = song
 }
 
 class SongActivity: ComponentActivity() {
@@ -45,7 +40,12 @@ class SongActivity: ComponentActivity() {
         val binding = SongsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        songAdapter = SongAdapter(::onSongsListClickItem, viewModelFav::onFavoriteDeleteClick, viewModelFav::onFavoriteAddClick)
+        songAdapter = SongAdapter(
+            ::onYTListener,
+            ::onSongsListClickItem,
+            viewModelFav::onFavoriteDeleteClick,
+            viewModelFav::onFavoriteAddClick
+        )
         // a la lista de empleados le incluyo el adapter de empleado
         binding.favouriteSongsList.adapter = songAdapter
 
@@ -90,6 +90,21 @@ class SongActivity: ComponentActivity() {
                 }
             }
 
+        })
+        viewModel.deleted.observe(this, Observer {
+            when (it.status){
+                Resource.Status.SUCCESS -> {
+
+                    Toast.makeText(this, "La canción " + viewModel.deletedName + " ha sido eliminada de favoritos", Toast.LENGTH_LONG).show()
+                    viewModel.updateSongList(1);
+                }
+                Resource.Status.ERROR -> {
+                    Toast.makeText(this, "La canción " + viewModel.deletedName +" no sido eliminada de favoritos", Toast.LENGTH_LONG).show()
+                }
+                Resource.Status.LOADING -> {
+
+                }
+            }
         })
 
         viewModelFav.deleted.observe(this, Observer {
@@ -151,7 +166,7 @@ class SongActivity: ComponentActivity() {
             binding.addList.visibility = View.VISIBLE
 
             binding.addList.setOnClickListener() {
-                viewModel.onAddEmployee(
+                viewModel.onAddSong(
                     binding.newSongUrl.text.toString(),
                     binding.newSongTitle.text.toString(),
                     binding.newSongAuthor.text.toString()
@@ -159,24 +174,43 @@ class SongActivity: ComponentActivity() {
             }
         }
         binding.filterSong.setOnClickListener {
-            binding.addSong.visibility = View.GONE
-            binding.deleteSong.visibility = View.GONE
-            binding.newSongId.visibility = View.VISIBLE
 
-            // Infla la vista de tu diálogo personalizado
-            val dialogView = FilterSongBinding.inflate(layoutInflater).root
-            // Configurar el AlertDialog
-            val builder = AlertDialog.Builder(this)
-            builder.setView(dialogView)
-
-            // Crear el AlertDialog
-            val alertDialog = builder.create()
-
-            // Mostrar el AlertDialog
-            alertDialog.show()
-          
 
         }
+        binding.deleteSong.setOnClickListener {
+            /*binding.addList.visibility = View.GONE
+            binding.filterSong.visibility = View.GONE
+            binding.deleteSong.visibility = View.GONE
+            binding.newSongTitle.visibility = View.VISIBLE
+            binding.deleteList.visibility = View.VISIBLE
+            binding.deleteList.setOnClickListener() {
+                viewModel.onDeleteSong(
+                    binding.newSongTitle.text.toString(),
+                )
+
+            }*/
+
+            if(selectedSong.id != 0){
+                viewModel.onDeleteSong(
+                    selectedSong,
+                )
+            }else{
+                Toast.makeText(
+                    this,
+                    "Selecciona una cancion para eliminar",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+
+        }
+    }
+
+    private fun onYTListener(url: String) {
+        val webIntent: Intent = Uri.parse(url).let { webpage ->
+            Intent(Intent.ACTION_VIEW, webpage)
+        }
+        startActivity(webIntent)
     }
 }
 

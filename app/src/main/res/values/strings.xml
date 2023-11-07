@@ -12,7 +12,7 @@
     <string name="seach_list_id">añade id</string>
     <string name="seachAuthor">añade autor a buscar</string>
     <string name="seachSong">añade cancion a buscar</string>
-
+    <string name="delete_list">delete list Song</string>
     <!-- Login -->
     <string name="login">Nombre de Usuario</string>
     <string name="password">Contraseña</string>

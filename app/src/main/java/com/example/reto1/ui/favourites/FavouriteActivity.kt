@@ -1,9 +1,10 @@
 package com.example.reto1.ui.favourites
 
 import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -32,19 +33,20 @@ class FavouriteActivity : ComponentActivity() {
 
         val binding = FavouritesActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setContentView(binding.root)
-        setContentView(binding.root)
 
-        favouriteAdapter = FavouriteAdapter(viewModel::onFavoriteViewHolderClick, viewModel::onFavoriteDeleteClick)
+        favouriteAdapter = FavouriteAdapter(::onYTListener, viewModel::onFavoriteViewHolderClick, viewModel::onFavoriteDeleteClick)
         binding.listViewFavourites.adapter = favouriteAdapter
         viewModel.items.observe(this, Observer {
             // esto es lo que se ejecuta cada vez que la lista en el VM cambia de valor
+            Log.i("lista", "llegado")
             when (it.status){
                 Resource.Status.SUCCESS -> {
                     if(!it.data.isNullOrEmpty()){
+                        Log.i("lista", "llegado1" + it.data.size)
                         favouriteAdapter.submitList(it.data)
                         findViewById<TextView>(R.id.textFavoritos).text = "Favoritos: " + it.data.size.toString()
                     }else{
+                        Log.i("lista", "llegado2")
                         favouriteAdapter.submitList(null)
                         findViewById<TextView>(R.id.textFavoritos).text = "Favoritos: 0"
                     }
@@ -72,45 +74,36 @@ class FavouriteActivity : ComponentActivity() {
             }
         })
 
-        findViewById<Button>(R.id.buttonFiltros).setOnClickListener {
-            findViewById<Button>(R.id.buttonFiltros).setOnClickListener {
-                val builder = AlertDialog.Builder(this)
+        binding.buttonFiltros.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
 
-                val inflater = layoutInflater
-                val dialogView = inflater.inflate(R.layout.popup_filtro_layout, null)
+            val inflater = layoutInflater
+            val dialogView = inflater.inflate(R.layout.popup_filtro_layout, null)
 
-                dialogView.findViewById<TextView>(R.id.textViewAutor).text = "Autor"
-                dialogView.findViewById<TextView>(R.id.textViewCancion).text = "Cancion"
+            dialogView.findViewById<TextView>(R.id.textViewAutor).text = "Autor"
+            dialogView.findViewById<TextView>(R.id.textViewCancion).text = "Cancion"
 
-                builder.setView(dialogView)
+            builder.setView(dialogView)
 
-                builder.setPositiveButton("Aceptar") { _, _ ->
-                    if(!dialogView.findViewById<EditText>(R.id.editTextAutor).text.toString().isNullOrBlank() || !dialogView.findViewById<EditText>(R.id.editTextCancion).text.toString().isNullOrBlank()) {
-                        var autor = ""
-                        var cancion = ""
+            builder.setPositiveButton("Aceptar") { _, _ ->
 
-                        if(!dialogView.findViewById<EditText>(R.id.editTextAutor).text.toString().isNullOrBlank() && dialogView.findViewById<EditText>(R.id.editTextCancion).text.toString().isNullOrBlank()){
-                            autor = dialogView.findViewById<EditText>(R.id.editTextAutor).text.toString()
-                        }else if(dialogView.findViewById<EditText>(R.id.editTextAutor).text.toString().isNullOrBlank() && !dialogView.findViewById<EditText>(R.id.editTextCancion).text.toString().isNullOrBlank()){
-                            cancion = dialogView.findViewById<EditText>(R.id.editTextCancion).text.toString()
-                        }else{
-                            autor = dialogView.findViewById<EditText>(R.id.editTextAutor).text.toString()
-                            cancion = dialogView.findViewById<EditText>(R.id.editTextCancion).text.toString()
-                        }
-                        Log.e("antes de pasar view model", autor + " " + cancion)
-                        viewModel.filtrodeFavouriteList(autor, cancion)
-                    }
-                }
+                val autor = dialogView.findViewById<EditText>(R.id.editTextAutor).text.toString()
+                val cancion = dialogView.findViewById<EditText>(R.id.editTextCancion).text.toString()
 
-                builder.setNegativeButton("Cancelar") { _, _ ->
-
-                }
-                val dialog = builder.create()
-                dialog.show()
+                viewModel.filtrodeFavouriteList(autor, cancion)
             }
+            builder.setNegativeButton("Cancelar") { _, _ ->
 
+            }
+            val dialog = builder.create()
+            dialog.show()
         }
     }
 
-
+    private fun onYTListener(url: String) {
+        val webIntent: Intent = Uri.parse(url).let { webpage ->
+            Intent(Intent.ACTION_VIEW, webpage)
+        }
+        startActivity(webIntent)
+    }
 }
