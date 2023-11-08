@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -13,11 +12,13 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.example.reto1.MyApp
 import com.example.reto1.R
 import com.example.reto1.data.Song
 import com.example.reto1.data.repository.remote.RemoteFavoritesDataSource
 import com.example.reto1.data.repository.remote.RemoteSongsDataSource
 import com.example.reto1.databinding.SongsActivityBinding
+import com.example.reto1.ui.favourites.FavouriteActivity
 import com.example.reto1.ui.favourites.FavouriteViewModel
 import com.example.reto1.ui.favourites.FavouritesViewModelFactory
 import com.example.reto1.utils.Resource
@@ -27,7 +28,9 @@ fun onSongsListClickItem(song: Song) {
     selectedSong = song
 }
 
+
 class SongActivity: ComponentActivity() {
+
 
     private lateinit var songAdapter: SongAdapter
     private val songRepository = RemoteSongsDataSource();
@@ -38,9 +41,15 @@ class SongActivity: ComponentActivity() {
     private val viewModelFav: FavouriteViewModel by viewModels {
         FavouritesViewModelFactory(favouriteRepository)
     }
+
+    private val viewModelUser: SongsViewModel by viewModels {
+        SongsViewModelFactory(songRepository)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.songs_activity)
+        //sacar el id de user
+        var userID = MyApp.userPreferences.fetchUserId()!!
         val binding = SongsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -84,7 +93,7 @@ class SongActivity: ComponentActivity() {
             when (it.status) {
 
                 Resource.Status.SUCCESS -> {
-                    viewModel.updateSongList(1)
+                    viewModel.updateSongList(userID)
 
                     binding.filterSong.visibility = View.VISIBLE
                     binding.deleteSong.visibility = View.VISIBLE
@@ -109,7 +118,7 @@ class SongActivity: ComponentActivity() {
                 Resource.Status.SUCCESS -> {
 
                     Toast.makeText(this, "La canción " + viewModel.deletedName + " ha sido eliminada de favoritos", Toast.LENGTH_LONG).show()
-                    viewModel.updateSongList(1);
+                    viewModel.updateSongList(userID);
                 }
                 Resource.Status.ERROR -> {
                     Toast.makeText(this, "La canción " + viewModel.deletedName +" no sido eliminada de favoritos", Toast.LENGTH_LONG).show()
@@ -128,7 +137,7 @@ class SongActivity: ComponentActivity() {
                         "La canción " + it.data?.title + " ha sido eliminada de favoritos",
                         Toast.LENGTH_LONG
                     ).show()
-                    viewModel.updateSongList(1);
+                    viewModel.updateSongList(userID);
                 }
 
                 Resource.Status.ERROR -> {
@@ -153,7 +162,7 @@ class SongActivity: ComponentActivity() {
                         "La canción " + it.data?.title + " ha sido añadida de favoritos",
                         Toast.LENGTH_LONG
                     ).show()
-                    viewModel.updateSongList(1);
+                    viewModel.updateSongList(userID);
                 }
 
                 Resource.Status.ERROR -> {
@@ -228,6 +237,12 @@ class SongActivity: ComponentActivity() {
 
 
         }
+
+        val intent = Intent(this, FavouriteActivity::class.java).apply {
+            // putExtra(EXTRA_MESSAGE, message)
+        }
+        startActivity(intent)
+        finish()
     }
 
     private fun onYTListener(url: String) {

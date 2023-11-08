@@ -1,4 +1,4 @@
-package com.example.reto1
+package com.example.reto1.ui.users
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,12 +7,11 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.example.reto1.data.CommonUserRepository
-import com.example.reto1.data.User
+import com.example.reto1.MainActivity
+import com.example.reto1.MyApp
 import com.example.reto1.data.repository.remote.RemoteUsersDataSource
 import com.example.reto1.databinding.LayoutLoginBinding
-import com.example.reto1.ui.users.UserViewModel
-import com.example.reto1.ui.users.UsersViewModelFactory
+import com.example.reto1.ui.songs.SongActivity
 import com.example.reto1.utils.Resource
 
 class LoginActivity: ComponentActivity() {
@@ -42,9 +41,17 @@ class LoginActivity: ComponentActivity() {
             // esto es lo que se ejecuta cada vez que la lista en el VM cambia de valor
             Log.i("LoginActivity", "Se ha logeado - Observer")
             when (it.status) {
-
                 Resource.Status.SUCCESS -> {
                     Log.i("Gorka_UserActivity", "Login Observer - Success")
+                    it.data?.let { data ->
+                        MyApp.userPreferences.saveAuthToken(data.accessToken,data.id.toInt())
+                        val intent = Intent(this, SongActivity::class.java).apply {
+                            // putExtra(EXTRA_MESSAGE, message)
+                        }
+                        startActivity(intent)
+                        finish()
+
+                    }
                 }
 
                 Resource.Status.ERROR -> {

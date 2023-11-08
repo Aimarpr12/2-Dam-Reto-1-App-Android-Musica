@@ -1,5 +1,6 @@
 package com.example.reto1.data.repository.remote
 
+import com.example.reto1.data.AuthenticationResponse
 import com.example.reto1.utils.Resource
 import com.example.reto1.data.User
 import com.example.reto1.data.CommonUserRepository

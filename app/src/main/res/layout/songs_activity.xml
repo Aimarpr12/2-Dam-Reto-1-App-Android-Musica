@@ -13,6 +13,12 @@
         app:title="@string/app_name" />
 
     <Button
+        android:id="@+id/buttonGoToFav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lista_de_favoritos" />
+
+    <Button
         android:id="@+id/add_song"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
