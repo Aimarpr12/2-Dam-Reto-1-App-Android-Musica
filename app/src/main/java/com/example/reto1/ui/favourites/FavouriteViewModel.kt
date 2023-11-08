@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import com.example.reto1.MyApp
 import com.example.reto1.data.CommonFavouriteRepository
 import com.example.reto1.data.Favourite
 import com.example.reto1.data.Song
@@ -18,8 +19,6 @@ class FavouriteViewModel(
 private val favouritesRepository: CommonFavouriteRepository
 ) : ViewModel() {
 
-    // TODO arreglar
-    private val idUser = 1;
 
     private val _items = MutableLiveData<Resource<List<Song>>>()
 
@@ -32,6 +31,7 @@ private val favouritesRepository: CommonFavouriteRepository
     private val _created = MutableLiveData<Resource<Song>>()
     val created : LiveData<Resource<Song>> get() = _created
 
+    val userId : Int = MyApp.userPreferences.fetchUserId()!!
 
     init {
         updateFavouriteList()
@@ -84,7 +84,7 @@ private val favouritesRepository: CommonFavouriteRepository
 
     fun onFavoriteDeleteClick(song: Song) {
         viewModelScope.launch {
-            val response = deleteFavourite(song.id, 1)
+            val response = deleteFavourite(song.id, userId)
             when (response.status){
                 Resource.Status.SUCCESS -> {
                     _deleted.value = Resource.success(song)
@@ -102,7 +102,7 @@ private val favouritesRepository: CommonFavouriteRepository
 
     fun onFavoriteAddClick(song: Song) {
         viewModelScope.launch {
-            val response = addFavourite(song.id, idUser)
+            val response = addFavourite(song.id, userId)
             when (response.status){
                 Resource.Status.SUCCESS -> {
                     _created.value = Resource.success(song)

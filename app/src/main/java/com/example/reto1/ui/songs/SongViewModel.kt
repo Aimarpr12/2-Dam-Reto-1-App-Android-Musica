@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import com.example.reto1.MyApp
 import com.example.reto1.data.Song
 import com.example.reto1.data.repository.CommonSongRepository
 import com.example.reto1.data.repository.remote.RemoteSongsDataSource
@@ -13,7 +14,6 @@ import com.example.reto1.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.math.log
 
 class SongsViewModelFactory(
     private val songRepository: RemoteSongsDataSource
@@ -38,8 +38,10 @@ class SongsViewModel (
     val deleted: LiveData<Resource<Integer>> get() = _delete
 
     var deletedName: String = "";
+
+    val userID = MyApp.userPreferences.fetchUserId()!!
     init {
-        updateSongList(1)
+        updateSongList(userID)
     }
 
 

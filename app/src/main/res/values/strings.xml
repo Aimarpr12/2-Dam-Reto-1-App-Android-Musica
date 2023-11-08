@@ -40,4 +40,5 @@
     <string name="Autor">Autor:</string>
     <string name="cancion">Cancion:</string>
     <string name="logo">Logo</string>
+    <string name="lista_de_favoritos">Lista de favoritos</string>
 </resources>

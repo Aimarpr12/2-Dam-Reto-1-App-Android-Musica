@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -19,6 +18,7 @@ import com.example.reto1.data.Song
 import com.example.reto1.data.repository.remote.RemoteFavoritesDataSource
 import com.example.reto1.data.repository.remote.RemoteSongsDataSource
 import com.example.reto1.databinding.SongsActivityBinding
+import com.example.reto1.ui.favourites.FavouriteActivity
 import com.example.reto1.ui.favourites.FavouriteViewModel
 import com.example.reto1.ui.favourites.FavouritesViewModelFactory
 import com.example.reto1.utils.Resource
@@ -48,6 +48,7 @@ class SongActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.songs_activity)
+        //sacar el id de user
         var userID = MyApp.userPreferences.fetchUserId()!!
         val binding = SongsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -236,6 +237,12 @@ class SongActivity: ComponentActivity() {
 
 
         }
+
+        val intent = Intent(this, FavouriteActivity::class.java).apply {
+            // putExtra(EXTRA_MESSAGE, message)
+        }
+        startActivity(intent)
+        finish()
     }
 
     private fun onYTListener(url: String) {
