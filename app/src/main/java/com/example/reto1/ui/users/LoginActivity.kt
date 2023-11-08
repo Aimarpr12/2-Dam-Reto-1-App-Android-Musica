@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.example.reto1.MainActivity
 import com.example.reto1.MyApp
 import com.example.reto1.data.repository.remote.RemoteUsersDataSource
 import com.example.reto1.databinding.LayoutLoginBinding
@@ -50,7 +49,7 @@ class LoginActivity: ComponentActivity() {
                     Log.i("Gorka_UserActivity", "Login Observer - Success")
                     it.data?.let { data ->
                         MyApp.userPreferences.saveAuthToken(data.accessToken,data.id.toInt(),data.login)
-                        val intent = Intent(this, ChangePasswordActivity::class.java).apply {
+                        val intent = Intent(this, SongActivity::class.java).apply {
                             // putExtra(EXTRA_MESSAGE, message)
                         }
                         startActivity(intent)
