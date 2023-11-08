@@ -8,11 +8,10 @@
     <string name="new_Song_title">nombre de la musica</string>
     <string name="new_Song_author">autor de la musica</string>
     <string name="add_list">add list Song</string>
-    <string name="new_Song_id">añade id</string>
-    <string name="seach_list_id">añade id</string>
-    <string name="seachAuthor">añade autor a buscar</string>
-    <string name="seachSong">añade cancion a buscar</string>
-    <string name="delete_list">delete list Song</string>
+    <string name="seachAuthor">seacSong</string>
+    <string name="seachSong"> Song</string>
+    <string name="songs">Songs: </string>
+
     <!-- Login -->
     <string name="login">Nombre de Usuario</string>
     <string name="password">Contraseña</string>
@@ -40,4 +39,5 @@
     <string name="filtros">Filtros</string>
     <string name="Autor">Autor:</string>
     <string name="cancion">Cancion:</string>
+    <string name="logo">Logo</string>
 </resources>
