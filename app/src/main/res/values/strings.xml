@@ -41,4 +41,6 @@
     <string name="cancion">Cancion:</string>
     <string name="logo">Logo</string>
     <string name="lista_de_favoritos">Lista de favoritos</string>
+    <string name="todas_las_canciones">Todas las canciones</string>
+    <string name="log_out">Log Out</string>
 </resources>

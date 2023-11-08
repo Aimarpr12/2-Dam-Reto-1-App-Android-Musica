@@ -5,8 +5,8 @@ import com.example.reto1.data.Favourite
 
 class RemoteFavoritesDataSource: BaseDataSource(), CommonFavouriteRepository {
 
-    override suspend fun getFavorites()= getResult{
-        RetrofitClient.apiInterface.getFavorites(1)
+    override suspend fun getFavorites(id_user: Int)= getResult{
+        RetrofitClient.apiInterface.getFavorites(id_user)
     }
 
     override suspend fun deleteFavorites(id_song: Int, id_user: Int)= getResult{

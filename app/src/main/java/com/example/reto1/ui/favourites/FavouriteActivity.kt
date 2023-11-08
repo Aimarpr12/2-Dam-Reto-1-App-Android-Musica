@@ -16,15 +16,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.reto1.R
-import com.example.reto1.data.Song
 import com.example.reto1.data.repository.remote.RemoteFavoritesDataSource
 import com.example.reto1.databinding.FavouritesActivityBinding
+import com.example.reto1.ui.songs.SongActivity
+import com.example.reto1.ui.users.LoginActivity
 import com.example.reto1.utils.Resource
 
 class FavouriteActivity : ComponentActivity() {
 
     private lateinit var favouriteAdapter: FavouriteAdapter
-    private var selectedSong: Song? = null
     private val favouriteRepository = RemoteFavoritesDataSource()
 
     private val viewModel: FavouriteViewModel by viewModels { FavouritesViewModelFactory(
@@ -92,6 +92,7 @@ class FavouriteActivity : ComponentActivity() {
             }
         })
 
+        //binding.txtusuario =
         binding.buttonFiltros.setOnClickListener {
             val builder = AlertDialog.Builder(this)
 
@@ -115,6 +116,22 @@ class FavouriteActivity : ComponentActivity() {
             }
             val dialog = builder.create()
             dialog.show()
+        }
+
+        binding.buttonGoToAllSong.setOnClickListener {
+            val intent = Intent(this, SongActivity::class.java).apply {
+                // putExtra(EXTRA_MESSAGE, message)
+            }
+            startActivity(intent)
+            finish()
+        }
+
+        binding.buttonLogOut.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java).apply {
+                // putExtra(EXTRA_MESSAGE, message)
+            }
+            startActivity(intent)
+            finish()
         }
     }
 

@@ -4,6 +4,6 @@ import com.example.reto1.data.CommonFavouriteRepository
 
 class FavouriteRepository(private val repository: CommonFavouriteRepository) {
 
-    suspend fun getFavorites() = repository.getFavorites()
+    suspend fun getFavorites(id_user: Int) = repository.getFavorites(id_user)
 
 }

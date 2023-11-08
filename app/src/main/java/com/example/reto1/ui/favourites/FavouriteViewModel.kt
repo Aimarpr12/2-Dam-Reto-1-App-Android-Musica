@@ -133,7 +133,7 @@ private val favouritesRepository: CommonFavouriteRepository
 
     suspend fun getFavouritesFromRepository() : Resource<List<Song>> {
         return withContext(Dispatchers.IO){
-            favouritesRepository.getFavorites()
+            favouritesRepository.getFavorites(userId)
         }
     }
 }

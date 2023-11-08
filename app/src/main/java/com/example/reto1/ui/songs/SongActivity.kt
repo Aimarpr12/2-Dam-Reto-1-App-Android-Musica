@@ -21,6 +21,7 @@ import com.example.reto1.databinding.SongsActivityBinding
 import com.example.reto1.ui.favourites.FavouriteActivity
 import com.example.reto1.ui.favourites.FavouriteViewModel
 import com.example.reto1.ui.favourites.FavouritesViewModelFactory
+import com.example.reto1.ui.users.LoginActivity
 import com.example.reto1.utils.Resource
 
 private var selectedSong : Song = Song()
@@ -237,12 +238,22 @@ class SongActivity: ComponentActivity() {
 
 
         }
-
-        val intent = Intent(this, FavouriteActivity::class.java).apply {
-            // putExtra(EXTRA_MESSAGE, message)
+        binding.buttonGoToFav.setOnClickListener {
+            val intent = Intent(this, FavouriteActivity::class.java).apply {
+                // putExtra(EXTRA_MESSAGE, message)
+            }
+            startActivity(intent)
+            finish()
         }
-        startActivity(intent)
-        finish()
+
+        binding.buttonLogOut.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java).apply {
+                // putExtra(EXTRA_MESSAGE, message)
+            }
+            startActivity(intent)
+            finish()
+        }
+
     }
 
     private fun onYTListener(url: String) {
