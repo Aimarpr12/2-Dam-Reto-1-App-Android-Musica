@@ -247,6 +247,7 @@ class SongActivity: ComponentActivity() {
         }
 
         binding.buttonLogOut.setOnClickListener {
+            MyApp.userPreferences.logOut()
             val intent = Intent(this, LoginActivity::class.java).apply {
                 // putExtra(EXTRA_MESSAGE, message)
             }

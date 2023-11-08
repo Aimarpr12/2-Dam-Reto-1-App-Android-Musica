@@ -2,7 +2,6 @@ package com.example.reto1
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.reto1.ui.users.UserViewModel
 
 class UserPreferences() {
     private val sharedPreferences: SharedPreferences by lazy {
@@ -32,6 +31,15 @@ class UserPreferences() {
 
     fun removeRememberMe() {
         val editor = sharedPreferences.edit()
+        editor.remove(USER_PASSWORD)
+        editor.apply()
+    }
+
+    fun logOut(){
+        val editor = sharedPreferences.edit()
+        editor.remove(USER_TOKEN)
+        editor.remove(USER_ID)
+        editor.remove(USER_LOGIN)
         editor.remove(USER_PASSWORD)
         editor.apply()
     }

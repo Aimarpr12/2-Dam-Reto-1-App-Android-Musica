@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.example.reto1.MyApp
 import com.example.reto1.R
 import com.example.reto1.data.repository.remote.RemoteFavoritesDataSource
 import com.example.reto1.databinding.FavouritesActivityBinding
@@ -127,12 +128,14 @@ class FavouriteActivity : ComponentActivity() {
         }
 
         binding.buttonLogOut.setOnClickListener {
+            MyApp.userPreferences.logOut()
             val intent = Intent(this, LoginActivity::class.java).apply {
                 // putExtra(EXTRA_MESSAGE, message)
             }
             startActivity(intent)
             finish()
         }
+        binding.txtusuario.text = "User: " + MyApp.userPreferences.fetchLogin()
     }
 
     private fun onYTListener(url: String) {
