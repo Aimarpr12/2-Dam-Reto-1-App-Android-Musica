@@ -1,5 +1,6 @@
 package com.example.reto1.data.repository.remote
 
+import com.example.reto1.data.AuthenticationResponse
 import com.example.reto1.data.Favourite
 import com.example.reto1.data.Song
 import com.example.reto1.data.User
@@ -36,7 +37,7 @@ interface APIInterface {
     suspend fun deleteSong(@Path("id") id: Int): Response<Integer>
 
     @POST("auth/login")
-    suspend fun loginUser(@Body user: User): Response<Void>
+    suspend fun loginUser(@Body user: User): Response<AuthenticationResponse>
 
     @POST("auth/register")
     suspend fun registerUser(@Body user: User): Response<Void>
@@ -45,7 +46,7 @@ interface APIInterface {
     suspend fun changePassword(@Body user: User): Response<Void>
 
     @GET("auth/me")
-    suspend fun getUser(): Response<User>
+    suspend fun getUser(): Response<Void>
 
 
 }

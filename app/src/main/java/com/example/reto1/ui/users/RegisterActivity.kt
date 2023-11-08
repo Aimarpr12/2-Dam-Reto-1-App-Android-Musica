@@ -1,4 +1,4 @@
-package com.example.reto1
+package com.example.reto1.ui.users
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,12 +8,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.reto1.data.repository.remote.RemoteUsersDataSource
-import com.example.reto1.databinding.LayoutChangePasswordBinding
-import com.example.reto1.ui.users.UserViewModel
-import com.example.reto1.ui.users.UsersViewModelFactory
+import com.example.reto1.databinding.LayoutRegisterBinding
 import com.example.reto1.utils.Resource
 
-class ChangePasswordActivity: ComponentActivity() {
+class RegisterActivity: ComponentActivity() {
 
     private val userRepository = RemoteUsersDataSource()
 
@@ -23,20 +21,20 @@ class ChangePasswordActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = LayoutChangePasswordBinding.inflate(layoutInflater)
+        val binding = LayoutRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.changePassword.observe(this, Observer {
+        viewModel.register.observe(this, Observer {
             // esto es lo que se ejecuta cada vez que la lista en el VM cambia de valor
-            Log.i("changePasswordActivity", "Ha entrado - Observer")
+            Log.i("LoginActivity", "Se ha registrado - Observer")
             when (it.status) {
 
                 Resource.Status.SUCCESS -> {
-                    Log.i("changePasswordActivity", "ChangePassword Observer - Success")
+                    Log.i("Gorka_UserActivity", "Register Observer - Success")
                 }
 
                 Resource.Status.ERROR -> {
-                    Log.i("changePasswordActivity", "ChangePassword Observer - Toast")
+                    Log.i("Gorka_UserActivity", "Register Observer - Toast")
                     Toast.makeText(this,it.message, Toast.LENGTH_LONG).show()
                 }
 
@@ -48,17 +46,20 @@ class ChangePasswordActivity: ComponentActivity() {
 
 
 
-        binding.changePasswordButton.setOnClickListener() {
-            val password1 = binding.newPassword.text.toString();
-            val password2 = binding.newPassword2.text.toString()
-            val currentPassword = binding.password.text.toString()
+        binding.registerButton.setOnClickListener() {
+            val password1 = binding.registerPassword1.text.toString();
+            val password2 = binding.registerPassword2.text.toString()
             if (password1 == password2) {
-                viewModel.changePassword(
-                    "Login1",
-                    password1,
-                    currentPassword
+                viewModel.registerUser(
+                    binding.registerName.text.toString(),
+                    binding.registerSurname.text.toString(),
+                    binding.registerEmail.text.toString(),
+                    binding.registerLogin.text.toString(),
+                    binding.registerPassword1.text.toString()
                 )
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.putExtra("login",binding.registerLogin.text.toString())
+                intent.putExtra("password",binding.registerPassword1.text.toString())
                 startActivity(intent)
                 finish()
             } else {

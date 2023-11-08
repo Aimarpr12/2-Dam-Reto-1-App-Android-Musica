@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">reto1</string>
+    <string name="app_name">MyTube</string>
     <!-- Song -->
     <string name="add_song">Add song</string>
     <string name="filter_song">Filtro</string>
