@@ -16,7 +16,6 @@ import com.example.reto1.utils.Resource
 
 class LoginActivity: ComponentActivity() {
 
-//    private lateinit var userAdapter: UserAdapter
     private val userRepository = RemoteUsersDataSource()
 
     private val viewModel: UserViewModel by viewModels { UsersViewModelFactory(
@@ -37,6 +36,12 @@ class LoginActivity: ComponentActivity() {
             binding.loginPassword.setText(sessionPassword)
         }
 
+        if (MyApp.userPreferences.fetchPassword() != null) {
+            binding.login.setText(MyApp.userPreferences.fetchLogin())
+            binding.loginPassword.setText(MyApp.userPreferences.fetchPassword())
+            binding.rememberMe.isChecked = true
+        }
+
         viewModel.login.observe(this, Observer {
             // esto es lo que se ejecuta cada vez que la lista en el VM cambia de valor
             Log.i("LoginActivity", "Se ha logeado - Observer")
@@ -44,8 +49,8 @@ class LoginActivity: ComponentActivity() {
                 Resource.Status.SUCCESS -> {
                     Log.i("Gorka_UserActivity", "Login Observer - Success")
                     it.data?.let { data ->
-                        MyApp.userPreferences.saveAuthToken(data.accessToken,data.id.toInt())
-                        val intent = Intent(this, SongActivity::class.java).apply {
+                        MyApp.userPreferences.saveAuthToken(data.accessToken,data.id.toInt(),data.login)
+                        val intent = Intent(this, ChangePasswordActivity::class.java).apply {
                             // putExtra(EXTRA_MESSAGE, message)
                         }
                         startActivity(intent)
@@ -67,12 +72,21 @@ class LoginActivity: ComponentActivity() {
 
         binding.loginButton.setOnClickListener() {
 
+            val login = binding.login.text.toString()
+            val password = binding.loginPassword.text.toString()
             viewModel.loginUser(
-                binding.login.text.toString(),
-                binding.loginPassword.text.toString()
+                login,
+                password
             )
             binding.login.setText("");
             binding.loginPassword.setText("");
+            if (binding.rememberMe.isChecked) {
+                MyApp.userPreferences.saveRememberMe(password)
+            } else {
+                if (MyApp.userPreferences.fetchPassword() != null) {
+                    MyApp.userPreferences.removeRememberMe()
+                }
+            }
         }
 
         binding.registerButton.setOnClickListener() {

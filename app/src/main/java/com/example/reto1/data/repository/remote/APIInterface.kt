@@ -46,7 +46,7 @@ interface APIInterface {
     suspend fun changePassword(@Body user: User): Response<Void>
 
     @GET("auth/me")
-    suspend fun getUser(): Response<Void>
+    suspend fun getUser(): Response<Integer>
 
 
 }

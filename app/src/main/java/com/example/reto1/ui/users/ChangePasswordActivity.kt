@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.reto1.MainActivity
+import com.example.reto1.MyApp
 import com.example.reto1.data.repository.remote.RemoteUsersDataSource
 import com.example.reto1.databinding.LayoutChangePasswordBinding
 import com.example.reto1.utils.Resource
@@ -48,16 +49,19 @@ class ChangePasswordActivity: ComponentActivity() {
 
 
         binding.changePasswordButton.setOnClickListener() {
-            val password1 = binding.newPassword.text.toString();
+            val password1 = binding.newPassword.text.toString()
             val password2 = binding.newPassword2.text.toString()
             val currentPassword = binding.password.text.toString()
+            val login = MyApp.userPreferences.fetchLogin()
             if (password1 == password2) {
-                viewModel.changePassword(
-                    "Login1",
-                    password1,
-                    currentPassword
-                )
-                val intent = Intent(this, MainActivity::class.java)
+                if (login != null) {
+                    viewModel.changePassword(
+                        login,
+                        password1,
+                        currentPassword
+                    )
+                }
+                val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {

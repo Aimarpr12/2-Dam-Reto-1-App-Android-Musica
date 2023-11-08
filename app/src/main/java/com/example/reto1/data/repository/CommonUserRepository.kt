@@ -4,7 +4,7 @@ import com.example.reto1.data.repository.remote.RetrofitClient
 import com.example.reto1.utils.Resource
 
 interface CommonUserRepository {
-    suspend fun getUser(): Resource<Void>
+    suspend fun getUser(): Resource<Integer>
 
     suspend fun loginUser(user: User): Resource<AuthenticationResponse>
 

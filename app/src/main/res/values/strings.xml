@@ -16,6 +16,7 @@
     <string name="login">Nombre de Usuario</string>
     <string name="password">Contraseña</string>
     <string name="button_login">Conectarse</string>
+    <string name="rememberMe">Recuerdame</string>
 
     <!-- Register -->
     <string name="noequalpassword">Las contraseñas no son iguales</string>

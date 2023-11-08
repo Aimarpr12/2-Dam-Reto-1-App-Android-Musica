@@ -45,11 +45,12 @@ class UserViewModel(
         }
     }
 
-    fun changePassword(login: String,currentPassword: String, newPassword1: String) {
+    fun changePassword(login: String,newPassword: String, currentPassword: String) {
         viewModelScope.launch {
-            val user = User(null,null,null,login,null,newPassword1,currentPassword)
+            val user = User(null,null,null,login,null,newPassword,currentPassword)
             Log.e("loginUser - Login",user.login)
             Log.e("loginUser - Password",user.password)
+            user.oldPassword?.let { Log.e("changePassword - oldPassword", it) }
             _changePassword.value = changePasswordInRepository(user)
         }
 
@@ -70,7 +71,7 @@ class UserViewModel(
 //
 //    }
 //
-//    private suspend fun getUserFromRepository(token: GetUserRequest) : Resource<GetUserResponse> {
+//    private suspend fun getUserFromRepository(token: String) : Resource<Integer> {
 //        return withContext(Dispatchers.IO) {
 //            userRepository.getUser(token)
 //        }

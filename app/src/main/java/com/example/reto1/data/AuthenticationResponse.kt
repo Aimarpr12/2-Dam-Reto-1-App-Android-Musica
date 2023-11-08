@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class AuthenticationResponse (
-    val Login: String,
+    val login: String,
     val accessToken: String,
-    val id: Integer
+    val id: Int
 ): Parcelable
