@@ -22,12 +22,13 @@
             android:id="@+id/login_button"
             android:layout_width="241dp"
             android:layout_height="79dp"
-            android:layout_marginBottom="308dp"
             android:text="@string/button_login"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.438"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.645" />
 
         <TextView
             android:id="@+id/Login_usernameText"
@@ -87,12 +88,13 @@
             android:id="@+id/register_button"
             android:layout_width="241dp"
             android:layout_height="79dp"
-            android:layout_marginBottom="176dp"
             android:text="@string/button_register"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.438"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.813" />
 
         <CheckBox
             android:id="@+id/rememberMe"
@@ -105,6 +107,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.387" />
+
+        <Button
+            android:id="@+id/buttonChangePass"
+            android:layout_width="183dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/change_password"
+            app:layout_constraintBottom_toTopOf="@+id/login_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.096"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rememberMe"
+            app:layout_constraintVertical_bias="0.0"
+            android:visibility="invisible"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

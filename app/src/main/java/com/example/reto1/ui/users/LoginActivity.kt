@@ -3,6 +3,7 @@ package com.example.reto1.ui.users
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
@@ -59,6 +60,7 @@ class LoginActivity: ComponentActivity() {
                 }
 
                 Resource.Status.ERROR -> {
+                    binding.buttonChangePass.visibility = View.VISIBLE
                     Log.i("Gorka_UserActivity", "Login Observer - Toast")
                     Toast.makeText(this,it.message, Toast.LENGTH_LONG).show()
                 }
@@ -68,6 +70,12 @@ class LoginActivity: ComponentActivity() {
                 }
             }
         })
+
+        binding.buttonChangePass.setOnClickListener {
+            val intent = Intent(this, ChangePasswordActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         binding.loginButton.setOnClickListener() {
 
