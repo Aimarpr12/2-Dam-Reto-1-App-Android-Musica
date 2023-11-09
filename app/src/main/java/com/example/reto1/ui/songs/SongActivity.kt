@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
+
 import androidx.lifecycle.Observer
 import com.example.reto1.MyApp
 import com.example.reto1.R
@@ -266,6 +267,8 @@ class SongActivity: ComponentActivity() {
             val dialog = builder.create()
             dialog.show()
         }
+
+        binding.nameUser.text = MyApp.userPreferences.fetchLogin()
     }
 
     private fun onYTListener(url: String) {

@@ -7,12 +7,13 @@
     <string name="new_Song_url">añade la url</string>
     <string name="new_Song_title">nombre de la musica</string>
     <string name="new_Song_author">autor de la musica</string>
-    <string name="add_list">add list Song</string>
+    <string name="lista_canciones">Listado de canciones: </string>
     <string name="seachAuthor">seacSong</string>
     <string name="seachSong"> Song</string>
     <string name="songs">Songs: </string>
     <string name="url">URL: </string>
     <string name="tittle">Titulo: </string>
+    <string name="name_user"> </string>
 
     <!-- Login -->
     <string name="login">Nombre de Usuario</string>
@@ -44,7 +45,7 @@
     <string name="Autor">Autor:</string>
     <string name="cancion">Cancion:</string>
     <string name="logo">Logo</string>
-    <string name="lista_de_favoritos">Lista de favoritos</string>
+    <string name="lista_de_favoritos">Favoritos</string>
     <string name="todas_las_canciones">Todas las canciones</string>
     <string name="log_out">Log Out</string>
 </resources>
