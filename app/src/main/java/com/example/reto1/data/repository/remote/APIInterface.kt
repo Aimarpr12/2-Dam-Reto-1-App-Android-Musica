@@ -2,6 +2,7 @@ package com.example.reto1.data.repository.remote
 
 import com.example.reto1.data.AuthenticationResponse
 import com.example.reto1.data.Favourite
+import com.example.reto1.data.RegistrationCheck
 import com.example.reto1.data.Song
 import com.example.reto1.data.User
 import retrofit2.Response
@@ -47,6 +48,12 @@ interface APIInterface {
 
     @GET("auth/me")
     suspend fun getUser(): Response<Integer>
+
+    @POST("auth/checkEmail")
+    suspend fun checkEmail(@Body registrationCheck: RegistrationCheck): Response<Void>
+
+    @POST("auth/checkLogin")
+    suspend fun checkLogin(@Body registrationCheck: RegistrationCheck): Response<Void>
 
 
 }

@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.reto1.MyApp
 import com.example.reto1.data.AuthenticationResponse
 import com.example.reto1.data.CommonUserRepository
+import com.example.reto1.data.RegistrationCheck
 import com.example.reto1.data.User
 import com.example.reto1.utils.Resource
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +29,12 @@ class UserViewModel(
     private val _changePassword = MutableLiveData<Resource<Void>>();
     val changePassword : LiveData<Resource<Void>> get() = _changePassword
 
+    private var _checkEmail = MutableLiveData<Resource<Void>>();
+    val checkEmail : LiveData<Resource<Void>> get() = _checkEmail
+
+    private var _checkLogin = MutableLiveData<Resource<Void>>();
+    val checkLogin : LiveData<Resource<Void>> get() = _checkLogin
+
 //    private val _user = MutableLiveData<Resource<GetUserResponse>>();
 //    val user : LiveData<Resource<GetUserResponse>> get() = _user
 
@@ -44,6 +51,33 @@ class UserViewModel(
             userRepository.loginUser(user)
         }
     }
+
+    fun checkEmail(email: String) {
+        viewModelScope.launch {
+            val check = RegistrationCheck(null,email)
+            _checkEmail.value = checkEmailInRepository(check)
+        }
+    }
+
+    private suspend fun checkEmailInRepository(check: RegistrationCheck) : Resource<Void> {
+        return withContext(Dispatchers.IO) {
+            userRepository.checkEmail(check)
+        }
+    }
+
+    fun checkLogin(login: String) {
+        viewModelScope.launch {
+            val check = RegistrationCheck(login,null)
+            _checkLogin.value = checkLoginInRepository(check)
+        }
+    }
+
+    private suspend fun checkLoginInRepository(check: RegistrationCheck) : Resource<Void> {
+        return withContext(Dispatchers.IO) {
+            userRepository.checkLogin(check)
+        }
+    }
+
 
     fun changePassword(login: String,newPassword: String, currentPassword: String) {
         viewModelScope.launch {

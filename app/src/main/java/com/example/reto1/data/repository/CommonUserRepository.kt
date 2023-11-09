@@ -11,4 +11,8 @@ interface CommonUserRepository {
     suspend fun registerUser(user: User): Resource<Void>
 
     suspend fun changePassword(user: User): Resource<Void>
+
+    suspend fun checkEmail(registrationCheck: RegistrationCheck): Resource<Void>
+
+    suspend fun checkLogin(registrationCheck: RegistrationCheck): Resource<Void>
 }
