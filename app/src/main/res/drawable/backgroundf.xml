@@ -1,31 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-        <item android:state_enabled="false">
-            <shape>
-                <solid android:color="@android:color/background_light"></solid>
-                <corners android:radius="100dp"></corners>
-            </shape>
-        </item>
-        <item android:state_pressed="true">
-            <shape>
-                <solid android:color="@color/md_theme_dark_outlineVariant"></solid>
-                <corners android:radius="5dp"></corners>
-            </shape>
-
-        </item>
-        <item android:state_pressed="false">
-            <shape>
-                <gradient
-                    android:angle="180"
-                    android:centerColor="@color/White"
-                    android:endColor="@color/md_theme_dark_scrim"
-                    android:startColor="@color/md_theme_dark_outlineVariant"
-                    android:type="linear" />
-                <corners android:radius="0dp"></corners>
-            </shape>
-        </item>
-
-
-
-</selector>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient android:startColor="@color/CornflowerBlue" android:centerColor="@color/CornflowerBlue"
+        android:endColor="@color/gay"
+        android:centerY="0.5"
+        android:angle="270" />
+    <corners android:radius="5dp" />
+    <padding android:left="7dp" android:top="15dp"
+        android:right="7dp" android:bottom="7dp" />
+    <margin android:left="3dp" android:top="3dp" android:right="3dp" android:bottom="3dp"/>
+</shape>
