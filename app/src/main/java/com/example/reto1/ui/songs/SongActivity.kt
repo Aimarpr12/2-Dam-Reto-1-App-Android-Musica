@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -95,13 +94,6 @@ class SongActivity: ComponentActivity() {
 
                 Resource.Status.SUCCESS -> {
                     viewModel.updateSongList(userID)
-
-                    binding.filterSong.visibility = View.VISIBLE
-                    binding.deleteSong.visibility = View.VISIBLE
-                    binding.newSongUrl.visibility = View.GONE
-                    binding.newSongTitle.visibility = View.GONE
-                    binding.newSongAuthor.visibility = View.GONE
-                    binding.addList.visibility = View.GONE
                 }
 
                 Resource.Status.ERROR -> {
