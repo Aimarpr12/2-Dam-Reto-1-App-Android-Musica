@@ -11,6 +11,8 @@
     <string name="seachAuthor">seacSong</string>
     <string name="seachSong"> Song</string>
     <string name="songs">Songs: </string>
+    <string name="url">URL: </string>
+    <string name="tittle">Titulo: </string>
 
     <!-- Login -->
     <string name="login">Nombre de Usuario</string>
@@ -34,6 +36,7 @@
 
     <!-- Favourite -->
     <string name="user">Usuario: </string>
+    <string name="listado_de_canciones">Listado favoritos de: </string>
     <string name="appName">MyTube</string>
     <string name="favoritos">Favoritos: </string>
     <string name="author">Autor</string>

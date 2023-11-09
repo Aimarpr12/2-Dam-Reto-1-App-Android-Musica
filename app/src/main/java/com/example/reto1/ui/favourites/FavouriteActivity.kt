@@ -135,10 +135,11 @@ class FavouriteActivity : ComponentActivity() {
             startActivity(intent)
             finish()
         }
-        binding.txtusuario.text = "User: " + MyApp.userPreferences.fetchLogin()
+        binding.txtusuario.text = "Listado favoritos de: " + MyApp.userPreferences.fetchLogin()
     }
 
     private fun onYTListener(url: String) {
+
         val webIntent: Intent = Uri.parse(url).let { webpage ->
             Intent(Intent.ACTION_VIEW, webpage)
         }

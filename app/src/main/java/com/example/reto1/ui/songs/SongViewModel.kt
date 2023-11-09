@@ -1,5 +1,6 @@
 package com.example.reto1.ui.songs
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -95,6 +96,7 @@ class SongsViewModel (
     }
     fun onAddSong( url: String, title: String, author: String){
         val newSong = Song( url, title, author, false)
+        Log.i("song", newSong.toString())
         viewModelScope.launch {
             _created.value = createNewSong(newSong)
         }

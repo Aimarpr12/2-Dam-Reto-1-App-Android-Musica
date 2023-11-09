@@ -180,13 +180,7 @@ class SongActivity: ComponentActivity() {
             }
         })
 
-        binding.addSong.setOnClickListener() {
-            binding.filterSong.visibility = View.GONE
-            binding.deleteSong.visibility = View.GONE
-            binding.newSongUrl.visibility = View.VISIBLE
-            binding.newSongTitle.visibility = View.VISIBLE
-            binding.newSongAuthor.visibility = View.VISIBLE
-            binding.addList.visibility = View.VISIBLE
+        /*binding.addSong.setOnClickListener() {
 
             binding.addList.setOnClickListener() {
                 viewModel.onAddSong(
@@ -195,7 +189,7 @@ class SongActivity: ComponentActivity() {
                     binding.newSongAuthor.text.toString()
                 )
             }
-        }
+        }*/
         binding.filterSong.setOnClickListener {
             val builder = AlertDialog.Builder(this)
 
@@ -254,7 +248,32 @@ class SongActivity: ComponentActivity() {
             startActivity(intent)
             finish()
         }
+        binding.addSong.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
 
+            val inflater = layoutInflater
+            val dialogView = inflater.inflate(R.layout.popup_add_song, null)
+            builder.setView(dialogView)
+
+            builder.setPositiveButton("Aceptar") { _, _ ->
+
+                val url = dialogView.findViewById<EditText>(R.id.editTextSongUrl).text.toString()
+                val autor = dialogView.findViewById<EditText>(R.id.editTextSongAuthor).text.toString()
+                val cancion = dialogView.findViewById<EditText>(R.id.editTextSongTitle).text.toString()
+
+                viewModel.onAddSong(
+                    url,
+                    autor,
+                    cancion
+                )
+
+            }
+            builder.setNegativeButton("Cancelar") { _, _ ->
+
+            }
+            val dialog = builder.create()
+            dialog.show()
+        }
     }
 
     private fun onYTListener(url: String) {

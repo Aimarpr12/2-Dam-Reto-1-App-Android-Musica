@@ -9,26 +9,30 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listViewFavourites"
-        android:layout_width="413dp"
-        android:layout_height="519dp"
+        android:layout_width="408dp"
+        android:layout_height="412dp"
         android:layout_weight="1"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/txtusuario"
-        android:layout_width="134dp"
-        android:layout_height="22dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginBottom="96dp"
-        android:text="@string/user"
+        android:layout_width="216dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="47dp"
+        android:text="@string/listado_de_canciones"
         app:layout_constraintBottom_toTopOf="@+id/textFavoritos"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.063"
+        app:layout_constraintEnd_toStartOf="@+id/buttonLogOut"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonGoToAllSong"
         tools:ignore="TextSizeCheck" />
 
     <TextView
@@ -40,8 +44,7 @@
         app:layout_constraintBottom_toTopOf="@+id/listViewFavourites"
         app:layout_constraintEnd_toStartOf="@+id/buttonFiltros"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtusuario"
-        app:layout_constraintVertical_bias="0.807" />
+        app:layout_constraintTop_toBottomOf="@+id/txtusuario" />
 
     <Button
         android:id="@+id/buttonFiltros"
@@ -52,8 +55,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.845"
         app:layout_constraintStart_toEndOf="@+id/textFavoritos"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.878" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogOut"
+        app:layout_constraintVertical_bias="0.857" />
 
     <ImageView
         android:id="@+id/logoImageView"
@@ -65,21 +68,16 @@
         android:scaleX="1.5"
         android:scaleY="1.5"
         android:src="@drawable/logo_my_tube"
-        app:layout_constraintBottom_toTopOf="@+id/buttonFiltros"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.807"
-        app:layout_constraintStart_toEndOf="@+id/txtusuario"
+        app:layout_constraintBottom_toTopOf="@+id/txtusuario"
+        app:layout_constraintEnd_toStartOf="@+id/buttonLogOut"
+        app:layout_constraintStart_toEndOf="@+id/buttonGoToAllSong"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.833" />
+        app:layout_constraintVertical_bias="0.368" />
 
     <Button
         android:id="@+id/buttonGoToAllSong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="99dp"
-        android:layout_marginBottom="10dp"
         android:text="@string/todas_las_canciones"
         app:layout_constraintBottom_toTopOf="@+id/txtusuario"
         app:layout_constraintEnd_toStartOf="@+id/logoImageView"
@@ -90,13 +88,12 @@
         android:id="@+id/buttonLogOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginEnd="37dp"
-        android:layout_marginBottom="22dp"
         android:text="@string/log_out"
-        app:layout_constraintBottom_toTopOf="@+id/logoImageView"
+        app:layout_constraintBottom_toTopOf="@+id/txtusuario"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonGoToAllSong"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/logoImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.335" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
