@@ -8,12 +8,12 @@
 
     <ImageButton
         android:id="@+id/imageButtonYT"
-        android:layout_width="68dp"
+        android:layout_width="67dp"
         android:layout_height="match_parent"
+        android:layout_marginEnd="16dp"
         android:background="#00FFFFFF"
         android:scaleType="centerCrop"
-        android:src="@drawable/youtube"
-        android:layout_marginEnd="16dp" />
+        android:src="@drawable/youtube" />
 
     <LinearLayout
         android:layout_width="225dp"
@@ -33,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/name"
+            android:textColor="@color/white"
             android:textSize="24sp" />
 
         <TextView
@@ -40,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/author"
+            android:textColor="#83FFFFFF"
             android:textSize="16sp" />
 
 

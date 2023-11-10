@@ -23,78 +23,87 @@
 
     <TextView
         android:id="@+id/txtusuario"
-        android:layout_width="216dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="47dp"
+        android:layout_width="218dp"
+        android:layout_height="27dp"
         android:text="@string/listado_de_canciones"
-        app:layout_constraintBottom_toTopOf="@+id/textFavoritos"
-        app:layout_constraintEnd_toStartOf="@+id/buttonLogOut"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.082"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonGoToAllSong"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.194"
         tools:ignore="TextSizeCheck" />
 
     <TextView
         android:id="@+id/textFavoritos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="200dp"
         android:text="@string/favoritos"
-        app:layout_constraintBottom_toTopOf="@+id/listViewFavourites"
-        app:layout_constraintEnd_toStartOf="@+id/buttonFiltros"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtusuario" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.362" />
 
     <Button
         android:id="@+id/buttonFiltros"
+        style="@style/GrayTransparentButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="@string/filtros"
         app:layout_constraintBottom_toTopOf="@+id/listViewFavourites"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.845"
-        app:layout_constraintStart_toEndOf="@+id/textFavoritos"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLogOut"
-        app:layout_constraintVertical_bias="0.857" />
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.866" />
 
     <ImageView
         android:id="@+id/logoImageView"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="81dp"
+        android:layout_height="69dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:scaleType="fitXY"
         android:scaleX="1.5"
         android:scaleY="1.5"
         android:src="@drawable/icono_sin_fondo"
-        app:layout_constraintBottom_toTopOf="@+id/txtusuario"
-        app:layout_constraintEnd_toStartOf="@+id/buttonLogOut"
-        app:layout_constraintStart_toEndOf="@+id/buttonGoToAllSong"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.048"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.368" />
+        app:layout_constraintVertical_bias="0.024" />
 
     <Button
         android:id="@+id/buttonGoToAllSong"
+        style="@style/GrayTransparentButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/todas_las_canciones"
-        app:layout_constraintBottom_toTopOf="@+id/txtusuario"
-        app:layout_constraintEnd_toStartOf="@+id/logoImageView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.937"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.185" />
 
     <Button
         android:id="@+id/buttonLogOut"
+        style="@style/GrayTransparentButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/log_out"
-        app:layout_constraintBottom_toTopOf="@+id/txtusuario"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/logoImageView"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.335" />
+        app:layout_constraintVertical_bias="0.036" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -49,7 +49,7 @@ class LoginActivity: ComponentActivity() {
                     Log.i("Gorka_UserActivity", "Login Observer - Success")
                     it.data?.let { data ->
                         MyApp.userPreferences.saveAuthToken(data.accessToken,data.id.toInt(),data.login)
-                        val intent = Intent(this, ChangePasswordActivity::class.java).apply {
+                        val intent = Intent(this, SongActivity::class.java).apply {
                             // putExtra(EXTRA_MESSAGE, message)
                         }
                         startActivity(intent)

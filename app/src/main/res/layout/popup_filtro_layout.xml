@@ -3,31 +3,37 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/backgroundf">
 
     <TextView
         android:id="@+id/textViewAutor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Autor"
-        android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/Autor"
+        android:textColor="@color/white" />
 
     <EditText
         android:id="@+id/editTextAutor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/white"
         android:ems="10"
         android:inputType="text"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"/>
+        android:textColor="@color/white"
+        android:textColorHint="@color/Black" />
 
     <TextView
         android:id="@+id/textViewCancion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/cancion"
+        android:textColor="@color/white"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"/>
 
@@ -36,6 +42,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/white"
         android:inputType="text"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"/>
