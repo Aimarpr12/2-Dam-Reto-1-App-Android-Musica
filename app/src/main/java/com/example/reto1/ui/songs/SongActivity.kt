@@ -21,6 +21,7 @@ import com.example.reto1.databinding.SongsActivityBinding
 import com.example.reto1.ui.favourites.FavouriteActivity
 import com.example.reto1.ui.favourites.FavouriteViewModel
 import com.example.reto1.ui.favourites.FavouritesViewModelFactory
+import com.example.reto1.ui.users.ChangePasswordActivity
 import com.example.reto1.ui.users.LoginActivity
 import com.example.reto1.utils.Resource
 
@@ -50,7 +51,6 @@ class SongActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.songs_activity)
         //sacar el id de user
-        var userID = MyApp.userPreferences.fetchUserId()!!
         val binding = SongsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -94,7 +94,7 @@ class SongActivity: ComponentActivity() {
             when (it.status) {
 
                 Resource.Status.SUCCESS -> {
-                    viewModel.updateSongList(userID)
+                    viewModel.updateSongList()
                 }
 
                 Resource.Status.ERROR -> {
@@ -112,7 +112,7 @@ class SongActivity: ComponentActivity() {
                 Resource.Status.SUCCESS -> {
 
                     Toast.makeText(this, "La canción " + viewModel.deletedName + " ha sido eliminada de favoritos", Toast.LENGTH_LONG).show()
-                    viewModel.updateSongList(userID);
+                    viewModel.updateSongList();
                 }
                 Resource.Status.ERROR -> {
                     Toast.makeText(this, "La canción " + viewModel.deletedName +" no sido eliminada de favoritos", Toast.LENGTH_LONG).show()
@@ -131,7 +131,7 @@ class SongActivity: ComponentActivity() {
                         "La canción " + it.data?.title + " ha sido eliminada de favoritos",
                         Toast.LENGTH_LONG
                     ).show()
-                    viewModel.updateSongList(userID);
+                    viewModel.updateSongList();
                 }
 
                 Resource.Status.ERROR -> {
@@ -156,7 +156,7 @@ class SongActivity: ComponentActivity() {
                         "La canción " + it.data?.title + " ha sido añadida de favoritos",
                         Toast.LENGTH_LONG
                     ).show()
-                    viewModel.updateSongList(userID);
+                    viewModel.updateSongList();
                 }
 
                 Resource.Status.ERROR -> {
@@ -208,6 +208,10 @@ class SongActivity: ComponentActivity() {
             dialog.show()
         }
 
+        binding.buttonChangePass.setOnClickListener {
+            val intent = Intent(this, ChangePasswordActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.deleteSong.setOnClickListener {
 

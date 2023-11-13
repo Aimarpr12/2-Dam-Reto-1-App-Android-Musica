@@ -20,6 +20,7 @@ import com.example.reto1.R
 import com.example.reto1.data.repository.remote.RemoteFavoritesDataSource
 import com.example.reto1.databinding.FavouritesActivityBinding
 import com.example.reto1.ui.songs.SongActivity
+import com.example.reto1.ui.users.ChangePasswordActivity
 import com.example.reto1.ui.users.LoginActivity
 import com.example.reto1.utils.Resource
 
@@ -135,6 +136,12 @@ class FavouriteActivity : ComponentActivity() {
             startActivity(intent)
             finish()
         }
+
+        binding.buttonChangePass.setOnClickListener {
+            val intent = Intent(this, ChangePasswordActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.txtusuario.text = "Listado favoritos de: " + MyApp.userPreferences.fetchLogin()
     }
 

@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.reto1.MyApp
 import com.example.reto1.data.Song
 import com.example.reto1.data.repository.CommonSongRepository
 import com.example.reto1.data.repository.remote.RemoteSongsDataSource
@@ -40,17 +39,16 @@ class SongsViewModel (
 
     var deletedName: String = "";
 
-    val userID = MyApp.userPreferences.fetchUserId()!!
     init {
-        updateSongList(userID)
+        updateSongList()
     }
 
 
 
 
-    fun updateSongList(id_user: Int) {
+    fun updateSongList() {
         viewModelScope.launch {
-            val repoResponse = getSongsFromRepository(id_user);
+            val repoResponse = getSongsFromRepository();
             _items.value = repoResponse
             when (_items.value!!.status){
                 Resource.Status.SUCCESS -> {
@@ -89,9 +87,9 @@ class SongsViewModel (
         _items.value = resource
     }
 
-    suspend fun getSongsFromRepository(id_user: Int): Resource<List<Song>> {
+    suspend fun getSongsFromRepository(): Resource<List<Song>> {
         return withContext(Dispatchers.IO) {
-            songRepository.getSongs(id_user)
+            songRepository.getSongs()
         }
     }
     fun onAddSong( url: String, title: String, author: String){

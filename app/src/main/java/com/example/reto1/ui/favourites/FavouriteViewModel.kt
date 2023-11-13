@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.reto1.MyApp
 import com.example.reto1.data.CommonFavouriteRepository
-import com.example.reto1.data.Favourite
 import com.example.reto1.data.Song
 import com.example.reto1.utils.Resource
 import kotlinx.coroutines.Dispatchers
@@ -84,7 +83,7 @@ private val favouritesRepository: CommonFavouriteRepository
 
     fun onFavoriteDeleteClick(song: Song) {
         viewModelScope.launch {
-            val response = deleteFavourite(song.id, userId)
+            val response = deleteFavourite(song.id)
             when (response.status){
                 Resource.Status.SUCCESS -> {
                     _deleted.value = Resource.success(song)
@@ -102,7 +101,7 @@ private val favouritesRepository: CommonFavouriteRepository
 
     fun onFavoriteAddClick(song: Song) {
         viewModelScope.launch {
-            val response = addFavourite(song.id, userId)
+            val response = addFavourite(song.id)
             when (response.status){
                 Resource.Status.SUCCESS -> {
                     _created.value = Resource.success(song)
@@ -118,22 +117,21 @@ private val favouritesRepository: CommonFavouriteRepository
         }
     }
 
-    suspend fun deleteFavourite(id_song : Int, id_user : Int):Resource<Integer>{
+    suspend fun deleteFavourite(id_song : Int):Resource<Integer>{
         return withContext(Dispatchers.IO) {
-            favouritesRepository.deleteFavorites(id_song, id_user)
+            favouritesRepository.deleteFavorites(id_song)
         }
     }
 
-    suspend fun addFavourite(id_song : Int, id_user : Int):Resource<Integer>{
-        val fav = Favourite(0, id_user, id_song)
+    suspend fun addFavourite(id_song : Int):Resource<Integer>{
         return withContext(Dispatchers.IO) {
-            favouritesRepository.createFavourite(fav)
+            favouritesRepository.createFavourite(id_song)
         }
     }
 
     suspend fun getFavouritesFromRepository() : Resource<List<Song>> {
         return withContext(Dispatchers.IO){
-            favouritesRepository.getFavorites(userId)
+            favouritesRepository.getFavorites()
         }
     }
 }

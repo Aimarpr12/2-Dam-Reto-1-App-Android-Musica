@@ -32,6 +32,7 @@ class ChangePasswordActivity: ComponentActivity() {
 
                 Resource.Status.SUCCESS -> {
                     Log.i("changePasswordActivity", "ChangePassword Observer - Success")
+                    finish()
                 }
 
                 Resource.Status.ERROR -> {
@@ -45,7 +46,9 @@ class ChangePasswordActivity: ComponentActivity() {
             }
         })
 
-
+        binding.buttonBack.setOnClickListener {
+            finish()
+        }
 
         binding.changePasswordButton.setOnClickListener() {
             val password1 = binding.newPassword.text.toString()
