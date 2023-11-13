@@ -20,6 +20,10 @@
     <string name="password">Contraseña</string>
     <string name="button_login">Conectarse</string>
     <string name="rememberMe">Recuerdame</string>
+    <string name="emptyLogin">Usuario vacio</string>
+    <string name="emptyPassword">Contraseña vacia</string>
+    <string name="emptyLoginAndPassword">Usuario y Contraseña vacios</string>
+    <string name="wrongLogin">Usuario o contraseña incorrectos</string>
 
     <!-- Register -->
     <string name="noequalpassword">Las contraseñas no son iguales</string>
@@ -29,8 +33,10 @@
     <string name="surname">Apellido</string>
     <string name="button_register">Registrarse</string>
     <string name="wrongEmail">Formato de correo incorrecto</string>
+    <string name="loginAlreadyInRepository">El login esta asignado a otra cuenta</string>
     <string name="emailAlreadyInRepository">El correo esta asignado a otra cuenta</string>
     <string name="button_back">Atras</string>
+    <string name="regiterInfoLeft">Falta informacion</string>
 
     <!-- Change Password -->
     <string name="change_password">Cambiar contraseña</string>

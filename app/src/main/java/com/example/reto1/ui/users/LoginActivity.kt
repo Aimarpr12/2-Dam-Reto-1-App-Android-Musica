@@ -3,11 +3,14 @@ package com.example.reto1.ui.users
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
+import android.view.View
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.reto1.MyApp
+import com.example.reto1.R
 import com.example.reto1.data.repository.remote.RemoteUsersDataSource
 import com.example.reto1.databinding.LayoutLoginBinding
 import com.example.reto1.ui.songs.SongActivity
@@ -42,11 +45,8 @@ class LoginActivity: ComponentActivity() {
         }
 
         viewModel.login.observe(this, Observer {
-            // esto es lo que se ejecuta cada vez que la lista en el VM cambia de valor
-            Log.i("LoginActivity", "Se ha logeado - Observer")
             when (it.status) {
                 Resource.Status.SUCCESS -> {
-                    Log.i("Gorka_UserActivity", "Login Observer - Success")
                     it.data?.let { data ->
                         MyApp.userPreferences.saveAuthToken(data.accessToken,data.id.toInt(),data.login)
                         val intent = Intent(this, SongActivity::class.java).apply {
@@ -59,8 +59,7 @@ class LoginActivity: ComponentActivity() {
                 }
 
                 Resource.Status.ERROR -> {
-                    Log.i("Gorka_UserActivity", "Login Observer - Toast")
-                    Toast.makeText(this,it.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,getString(R.string.wrongLogin), Toast.LENGTH_LONG).show()
                 }
 
                 Resource.Status.LOADING -> {
@@ -73,19 +72,31 @@ class LoginActivity: ComponentActivity() {
 
             val login = binding.login.text.toString()
             val password = binding.loginPassword.text.toString()
-            viewModel.loginUser(
-                login,
-                password
-            )
-            binding.login.setText("");
-            binding.loginPassword.setText("");
-            if (binding.rememberMe.isChecked) {
-                MyApp.userPreferences.saveRememberMe(password)
+
+            if (login.isNotEmpty() && password.isNotEmpty()) {
+                viewModel.loginUser(
+                    login,
+                    password
+                )
+                binding.login.setText("");
+                binding.loginPassword.setText("");
+                if (binding.rememberMe.isChecked) {
+                    MyApp.userPreferences.saveRememberMe(password)
+                } else {
+                    if (MyApp.userPreferences.fetchPassword() != null) {
+                        MyApp.userPreferences.removeRememberMe()
+                    }
+                }
             } else {
-                if (MyApp.userPreferences.fetchPassword() != null) {
-                    MyApp.userPreferences.removeRememberMe()
+                if (login.isEmpty() && password.isEmpty()) {
+                    Toast.makeText(this,getString(R.string.emptyLoginAndPassword), Toast.LENGTH_LONG).show()
+                } else if (login.isEmpty()) {
+                    Toast.makeText(this,getString(R.string.emptyLogin), Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this,getString(R.string.emptyPassword), Toast.LENGTH_LONG).show()
                 }
             }
+
         }
 
         binding.registerButton.setOnClickListener() {
