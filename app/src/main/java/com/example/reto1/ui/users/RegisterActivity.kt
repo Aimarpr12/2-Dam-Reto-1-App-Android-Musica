@@ -32,12 +32,9 @@ class RegisterActivity: ComponentActivity() {
         setContentView(binding.root)
 
         viewModel.register.observe(this, Observer {
-            // esto es lo que se ejecuta cada vez que la lista en el VM cambia de valor
-            Log.i("LoginActivity", "Se ha registrado - Observer")
             when (it.status) {
 
                 Resource.Status.SUCCESS -> {
-                    Log.i("Gorka_UserActivity", "Register Observer - Success")
                     val intent = Intent(this, LoginActivity::class.java)
                     intent.putExtra("login",binding.registerLogin.text.toString())
                     intent.putExtra("password",binding.registerPassword1.text.toString())
@@ -46,8 +43,7 @@ class RegisterActivity: ComponentActivity() {
                 }
 
                 Resource.Status.ERROR -> {
-                    Log.i("Gorka_UserActivity", "Register Observer - Toast")
-                    Toast.makeText(this,it.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,getString(R.string.regiterInfoLeft), Toast.LENGTH_LONG).show()
                 }
 
                 Resource.Status.LOADING -> {
@@ -57,22 +53,17 @@ class RegisterActivity: ComponentActivity() {
         })
 
         viewModel.checkEmail.observe(this, Observer {
-            // esto es lo que se ejecuta cada vez que la lista en el VM cambia de valor
-            Log.i("CheckEmail", "Ha detectado cambio - Observer")
             when (it.status) {
 
                 Resource.Status.SUCCESS -> {
-                    Log.i("Gorka_UserActivity", "Email in Repository - Success")
                     binding.emailWrong.visibility = View.INVISIBLE
                     binding.emailWrong.text = ""
                     binding.registerButton.isEnabled = true;
                 }
 
                 Resource.Status.ERROR -> {
-                    Log.i("Gorka_UserActivity", "Email in Repository - Toast")
                     binding.emailWrong.visibility = View.VISIBLE
                     binding.emailWrong.text = getString(R.string.emailAlreadyInRepository)
-                    binding.emailWrong.setTextColor(R.color.Red)
                     binding.registerButton.isEnabled = false;
                 }
 
@@ -83,22 +74,17 @@ class RegisterActivity: ComponentActivity() {
         })
 
         viewModel.checkLogin.observe(this, Observer {
-            // esto es lo que se ejecuta cada vez que la lista en el VM cambia de valor
-            Log.i("CheckEmail", "Ha detectado cambio - Observer")
             when (it.status) {
 
                 Resource.Status.SUCCESS -> {
-                    Log.i("Gorka_UserActivity", "Email in Repository - Success")
                     binding.LoginWrong.visibility = View.INVISIBLE
                     binding.LoginWrong.text = ""
                     binding.registerButton.isEnabled = true;
                 }
 
                 Resource.Status.ERROR -> {
-                    Log.i("Gorka_UserActivity", "Email in Repository - Toast")
                     binding.LoginWrong.visibility = View.VISIBLE
-                    binding.LoginWrong.text = getString(R.string.emailAlreadyInRepository)
-                    binding.LoginWrong.setTextColor(R.color.Red)
+                    binding.LoginWrong.text = getString(R.string.loginAlreadyInRepository)
                     binding.registerButton.isEnabled = false;
                 }
 
@@ -113,9 +99,7 @@ class RegisterActivity: ComponentActivity() {
             if (!hasFocus) {
                 if (android.util.Patterns.EMAIL_ADDRESS.matcher(binding.registerEmail.text.toString()).matches()) {
                     viewModel.checkEmail(binding.registerEmail.text.toString())
-                    Log.i("Gorka_UserActivity", "ChangedEmail - Correct")
                 } else {
-                    Log.i("Gorka_UserActivity", "ChangedEmail - NotEmail")
                 }
             }
         }
