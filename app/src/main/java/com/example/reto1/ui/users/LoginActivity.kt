@@ -4,11 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.util.Patterns
-
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
+import androidx.compose.ui.text.toLowerCase
+import androidx.compose.ui.text.toUpperCase
 import androidx.lifecycle.Observer
 import com.example.reto1.MyApp
 import com.example.reto1.R
@@ -31,31 +31,35 @@ class LoginActivity: ComponentActivity() {
         val binding = LayoutLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Se comprueba si hay datos extra introducidos en el intent
         val extras = intent.extras
         if (extras != null) {
-            val sessionLogin = intent.getStringExtra("login")
-            val sessionPassword = intent.getStringExtra("password")
+            //Recoge los datos y los coloca en los EditText
+            var sessionLogin = intent.getStringExtra("login")
+            var sessionPassword = intent.getStringExtra("password")
             binding.login.setText(sessionLogin)
             binding.loginPassword.setText(sessionPassword)
         }
 
+        //Comprueba si esta la contraseña almacenada en el userPreferences
         if (MyApp.userPreferences.fetchPassword() != null) {
+            //Rellena el login, la contraseña y selecciona el recuerdame.
             binding.login.setText(MyApp.userPreferences.fetchLogin())
             binding.loginPassword.setText(MyApp.userPreferences.fetchPassword())
             binding.rememberMe.isChecked = true
         }
 
+        //Comprueba si se selecciona el boton de Login
         viewModel.login.observe(this, Observer {
-            // esto es lo que se ejecuta cada vez que la lista en el VM cambia de valor
-            Log.i("LoginActivity", "Se ha logeado - Observer")
             when (it.status) {
                 Resource.Status.SUCCESS -> {
-                    Log.i("Gorka_UserActivity", "Login Observer - Success")
+                    //En caso de SUCCESS, introduce el id, login y el token en userPreferences
                     it.data?.let { data ->
                         MyApp.userPreferences.saveAuthToken(data.accessToken,data.id.toInt(),data.login)
                         val intent = Intent(this, SongActivity::class.java).apply {
                             // putExtra(EXTRA_MESSAGE, message)
                         }
+                        binding.buttonChangePass.visibility = View.INVISIBLE
                         startActivity(intent)
                         finish()
 
@@ -64,7 +68,6 @@ class LoginActivity: ComponentActivity() {
 
                 Resource.Status.ERROR -> {
                     binding.buttonChangePass.visibility = View.VISIBLE
-                    Log.i("Gorka_UserActivity", "Login Observer - Toast")
                     Toast.makeText(this,it.message, Toast.LENGTH_LONG).show()
                 }
 
@@ -76,9 +79,11 @@ class LoginActivity: ComponentActivity() {
 
         binding.loginButton.setOnClickListener() {
 
+            //Recoge los datos
             val login = binding.login.text.toString()
             val password = binding.loginPassword.text.toString()
 
+            //Comprueba que contengan datos
             if (login.isNotEmpty() && password.isNotEmpty()) {
                 viewModel.loginUser(
                     login,
@@ -86,14 +91,17 @@ class LoginActivity: ComponentActivity() {
                 )
                 binding.login.setText("");
                 binding.loginPassword.setText("");
+                //Si el checkbox esta seleccionado, guarda los datos en userPreferences
                 if (binding.rememberMe.isChecked) {
                     MyApp.userPreferences.saveRememberMe(password)
                 } else {
+                    //Como el checkbox no esta seleccionado, borra la contraseña del userPreferences
                     if (MyApp.userPreferences.fetchPassword() != null) {
                         MyApp.userPreferences.removeRememberMe()
                     }
                 }
             } else {
+                //Si no estan todos los campos con datos, comprueba que cambo esta vacio y envia toast
                 if (login.isEmpty() && password.isEmpty()) {
                     Toast.makeText(this,getString(R.string.emptyLoginAndPassword), Toast.LENGTH_LONG).show()
                 } else if (login.isEmpty()) {

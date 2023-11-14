@@ -42,6 +42,11 @@
     <string name="change_password">Cambiar contraseña</string>
     <string name="current_password">Contraseña actual</string>
     <string name="new_password">Nueva contraseña</string>
+    <string name="changedPassword">Contraseña cambiada correctamente</string>
+    <string name="notChangedPassword">Contraseña actual erronea</string>
+    <string name="emptyCurrentPassword">Contraseña actual vacia</string>
+    <string name="emptyNewPassword">Contraseña nueva vacia</string>
+
 
 
     <!-- Favourite -->

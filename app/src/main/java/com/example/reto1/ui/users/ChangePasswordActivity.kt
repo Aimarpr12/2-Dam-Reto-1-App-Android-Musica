@@ -1,6 +1,6 @@
 package com.example.reto1.ui.users
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.reto1.MyApp
+import com.example.reto1.R
 import com.example.reto1.data.repository.remote.RemoteUsersDataSource
 import com.example.reto1.databinding.LayoutChangePasswordBinding
 import com.example.reto1.utils.Resource
@@ -19,6 +20,7 @@ class ChangePasswordActivity: ComponentActivity() {
     private val viewModel: UserViewModel by viewModels { UsersViewModelFactory(
         userRepository
     ) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,18 +28,15 @@ class ChangePasswordActivity: ComponentActivity() {
         setContentView(binding.root)
 
         viewModel.changePassword.observe(this, Observer {
-            // esto es lo que se ejecuta cada vez que la lista en el VM cambia de valor
-            Log.i("changePasswordActivity", "Ha entrado - Observer")
             when (it.status) {
 
                 Resource.Status.SUCCESS -> {
-                    Log.i("changePasswordActivity", "ChangePassword Observer - Success")
+                    Toast.makeText(this,getString(R.string.changedPassword), Toast.LENGTH_LONG).show()
                     finish()
                 }
 
                 Resource.Status.ERROR -> {
-                    Log.i("changePasswordActivity", "ChangePassword Observer - Toast")
-                    Toast.makeText(this,it.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,getString(R.string.notChangedPassword), Toast.LENGTH_LONG).show()
                 }
 
                 Resource.Status.LOADING -> {
@@ -51,26 +50,40 @@ class ChangePasswordActivity: ComponentActivity() {
         }
 
         binding.changePasswordButton.setOnClickListener() {
-            val password1 = binding.newPassword.text.toString()
-            val password2 = binding.newPassword2.text.toString()
-            val currentPassword = binding.password.text.toString()
-            val login = MyApp.userPreferences.fetchLogin()
-            if (password1 == password2) {
-                if (login != null) {
-                    viewModel.changePassword(
-                        login,
-                        password1,
-                        currentPassword
-                    )
+            if (binding.password.text.isNotEmpty() && binding.newPassword.text.isNotEmpty() && binding.newPassword2.text.isNotEmpty()) {
+                val password1 = binding.newPassword.text.toString()
+                val password2 = binding.newPassword2.text.toString()
+                val currentPassword = binding.password.text.toString()
+                val login = MyApp.userPreferences.fetchLogin()
+                if (password1 == password2) {
+                    if (login != null) {
+                        viewModel.changePassword(
+                            login,
+                            password1,
+                            currentPassword
+                        )
+                    }
+                } else {
+                    Toast.makeText(this,getString(R.string.noequalpassword), Toast.LENGTH_LONG).show()
+                    eraseChangePassword(binding)
                 }
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
             } else {
-                Toast.makeText(this,"@String/noequalpassword", Toast.LENGTH_LONG).show()
+                if (binding.password.text.isNullOrEmpty()) {
+                    Toast.makeText(this,getString(R.string.emptyCurrentPassword), Toast.LENGTH_LONG).show()
+                }
+                if (binding.newPassword.text.isNullOrEmpty() || binding.newPassword2.text.isNullOrEmpty()) {
+                    Toast.makeText(this,getString(R.string.emptyNewPassword), Toast.LENGTH_LONG).show()
+                }
+                eraseChangePassword(binding)
             }
 
         }
 
+    }
+
+    private fun eraseChangePassword(binding: LayoutChangePasswordBinding) {
+        binding.password.setText("")
+        binding.newPassword.setText("")
+        binding.newPassword2.setText("")
     }
 }

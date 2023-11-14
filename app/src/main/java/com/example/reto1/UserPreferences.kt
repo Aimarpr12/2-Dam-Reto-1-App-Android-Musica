@@ -2,6 +2,8 @@ package com.example.reto1
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.compose.ui.text.toLowerCase
+import androidx.compose.ui.text.toUpperCase
 
 class UserPreferences() {
     private val sharedPreferences: SharedPreferences by lazy {
@@ -18,7 +20,7 @@ class UserPreferences() {
     fun saveAuthToken(token: String,id: Int, login: String) {
         val editor = sharedPreferences.edit()
         editor.putInt(USER_ID,id)
-        editor.putString(USER_LOGIN,login)
+        editor.putString(USER_LOGIN,login.substring(0,1).toUpperCase() + login.substring(1).toLowerCase())
         editor.putString(USER_TOKEN,token)
         editor.apply()
     }
