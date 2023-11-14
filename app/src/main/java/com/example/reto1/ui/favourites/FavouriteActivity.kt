@@ -105,7 +105,6 @@ class FavouriteActivity : ComponentActivity() {
             dialogView.findViewById<TextView>(R.id.textViewCancion).text = "Cancion"
 
             builder.setView(dialogView)
-
             builder.setPositiveButton("Aceptar") { _, _ ->
 
                 val autor = dialogView.findViewById<EditText>(R.id.editTextAutor).text.toString()
