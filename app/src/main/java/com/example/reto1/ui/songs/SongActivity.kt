@@ -208,7 +208,7 @@ class SongActivity: ComponentActivity() {
             dialog.show()
         }
 
-        binding.buttonChangePass.setOnClickListener {
+        binding.buttonChangePass?.setOnClickListener {
             val intent = Intent(this, ChangePasswordActivity::class.java)
             startActivity(intent)
         }
