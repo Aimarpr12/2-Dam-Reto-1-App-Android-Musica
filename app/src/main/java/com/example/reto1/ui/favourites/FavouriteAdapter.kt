@@ -2,11 +2,6 @@ package com.example.reto1.ui.favourites
 
 import android.app.AlertDialog
 import android.graphics.Color
-import android.graphics.Typeface
-import android.text.Html
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -82,11 +77,7 @@ class FavouriteAdapter(
             binding.imageButtonFav.setOnClickListener {
                 val builder = AlertDialog.Builder(binding.root.context)
                 builder.setTitle("Confirmación")
-                val title = song.title
-                val message = "¿Estás seguro de que deseas eliminar la canción de <b>$title</b> de favoritos?"
-                val spannableMessage = SpannableStringBuilder(Html.fromHtml(message))
-                spannableMessage.setSpan(StyleSpan(Typeface.BOLD), 50, 40 + title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                builder.setMessage(spannableMessage)
+                builder.setMessage("¿Estás seguro de que deseas eliminar la cancion de " + song.title +  "  de favoritos?")
 
                 builder.setPositiveButton("Sí") { _, _ ->
                     onFavoriteClickListener(song)

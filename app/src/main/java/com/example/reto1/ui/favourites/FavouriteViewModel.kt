@@ -64,7 +64,7 @@ private val favouritesRepository: CommonFavouriteRepository
         val listFavFiltradas = mutableListOf<Song>()
         listaOriginal.forEach { song ->
             if((song.author.lowercase().indexOf(autor!!.lowercase(), 0)) != -1
-                && (song.title.lowercase().indexOf(cancion!!.lowercase(), 0)) != -1) {
+                && (song.title.replace(Regex("\\(.*?\\)"), "").lowercase().indexOf(cancion!!.lowercase(), 0)) != -1) {
                 listFavFiltradas.add(song)
             }
         }

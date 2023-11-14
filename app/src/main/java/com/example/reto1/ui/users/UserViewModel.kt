@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.reto1.MyApp
 import com.example.reto1.data.AuthenticationResponse
 import com.example.reto1.data.CommonUserRepository
 import com.example.reto1.data.RegistrationCheck
@@ -95,21 +94,6 @@ class UserViewModel(
             userRepository.changePassword(user)
         }
     }
-
-//    fun getUser() {
-//        viewModelScope.launch {
-//            val token = MyApp.userPreferences.fetchAuthToken()
-//                ?.let { GetUserRequest(it) }
-//            _user.value = token?.let { getUserFromRepository(it) }
-//        }
-//
-//    }
-//
-//    private suspend fun getUserFromRepository(token: String) : Resource<Integer> {
-//        return withContext(Dispatchers.IO) {
-//            userRepository.getUser(token)
-//        }
-//    }
 
     fun registerUser(name: String, surname: String, email: String, login: String, password: String) {
         viewModelScope.launch {

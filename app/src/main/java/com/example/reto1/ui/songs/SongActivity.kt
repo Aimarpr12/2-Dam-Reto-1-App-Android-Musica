@@ -77,7 +77,7 @@ class SongActivity: ComponentActivity() {
                 else{
 
                     songAdapter.submitList(null)
-                    findViewById<TextView>(R.id.songs).text = "Favoritos: 0"
+                    findViewById<TextView>(R.id.songs).text = "Songs: 0"
                 }
             }
 
@@ -173,16 +173,6 @@ class SongActivity: ComponentActivity() {
             }
         })
 
-        /*binding.addSong.setOnClickListener() {
-
-            binding.addList.setOnClickListener() {
-                viewModel.onAddSong(
-                    binding.newSongUrl.text.toString(),
-                    binding.newSongTitle.text.toString(),
-                    binding.newSongAuthor.text.toString()
-                )
-            }
-        }*/
         binding.filterSong.setOnClickListener {
             val builder = AlertDialog.Builder(this)
 
