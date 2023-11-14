@@ -12,11 +12,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.logo_layout)
-        val cambiarActividad = false
         Handler(Looper.getMainLooper()).postDelayed(
             {
                 val intent = Intent(this, LoginActivity::class.java).apply {
-                    // putExtra(EXTRA_MESSAGE, message)
+
                 }
                 startActivity(intent)
                 finish()

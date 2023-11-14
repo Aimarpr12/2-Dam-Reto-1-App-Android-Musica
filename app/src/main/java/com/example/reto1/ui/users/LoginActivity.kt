@@ -2,13 +2,10 @@ package com.example.reto1.ui.users
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
-import androidx.compose.ui.text.toLowerCase
-import androidx.compose.ui.text.toUpperCase
 import androidx.lifecycle.Observer
 import com.example.reto1.MyApp
 import com.example.reto1.R

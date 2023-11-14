@@ -1,8 +1,6 @@
 package com.example.reto1.ui.users
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
@@ -32,6 +30,9 @@ class ChangePasswordActivity: ComponentActivity() {
 
                 Resource.Status.SUCCESS -> {
                     Toast.makeText(this,getString(R.string.changedPassword), Toast.LENGTH_LONG).show()
+                    if (MyApp.userPreferences.fetchPassword() != null) {
+                        MyApp.userPreferences.saveRememberMe(binding.newPassword.text.toString())
+                    }
                     finish()
                 }
 
