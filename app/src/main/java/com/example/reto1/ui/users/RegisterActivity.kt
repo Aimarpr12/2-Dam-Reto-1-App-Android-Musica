@@ -44,7 +44,7 @@ class RegisterActivity: ComponentActivity() {
                 }
 
                 Resource.Status.ERROR -> {
-                    Toast.makeText(this,getString(R.string.regiterInfoLeft), Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,getString(R.string.registerInfoLeft), Toast.LENGTH_LONG).show()
                 }
 
                 Resource.Status.LOADING -> {

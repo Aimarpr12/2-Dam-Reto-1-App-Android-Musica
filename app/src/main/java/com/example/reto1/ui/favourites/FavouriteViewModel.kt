@@ -39,7 +39,6 @@ private val favouritesRepository: CommonFavouriteRepository
     fun updateFavouriteList(){
         viewModelScope.launch {
             _items.value = getFavouritesFromRepository()
-
             when (_items.value!!.status){
                 Resource.Status.SUCCESS -> {
                     listaOriginal = ArrayList()
@@ -57,6 +56,7 @@ private val favouritesRepository: CommonFavouriteRepository
 
                 }
             }
+
         }
     }
 

@@ -52,6 +52,7 @@ class SongsViewModel (
             _items.value = repoResponse
             when (_items.value!!.status){
                 Resource.Status.SUCCESS -> {
+                    /*
                     listaOriginal = ArrayList()
                     val lista = _items.value!!.data!!
                     if (lista != null) {
@@ -59,6 +60,9 @@ class SongsViewModel (
                             (listaOriginal as ArrayList<Song>).add(song)
                         }
                     }
+                     */
+                    listaOriginal = _items.value!!.data?.toMutableList() ?: emptyList()
+
                 }
                 Resource.Status.ERROR -> {
 

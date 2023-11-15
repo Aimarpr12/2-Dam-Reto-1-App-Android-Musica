@@ -25,14 +25,10 @@ import com.example.reto1.ui.users.ChangePasswordActivity
 import com.example.reto1.ui.users.LoginActivity
 import com.example.reto1.utils.Resource
 
-private var selectedSong : Song = Song()
-fun onSongsListClickItem(song: Song) {
-    selectedSong = song
-}
-
 
 class SongActivity: ComponentActivity() {
 
+    private var selectedSong : Song = Song()
 
     private lateinit var songAdapter: SongAdapter
     private val songRepository = RemoteSongsDataSource();
@@ -271,5 +267,10 @@ class SongActivity: ComponentActivity() {
         }
         startActivity(webIntent)
     }
+
+    private fun onSongsListClickItem(song: Song) {
+        selectedSong = song
+    }
+
 }
 

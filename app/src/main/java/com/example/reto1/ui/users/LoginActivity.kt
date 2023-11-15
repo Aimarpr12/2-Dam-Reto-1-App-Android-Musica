@@ -54,9 +54,6 @@ class LoginActivity: ComponentActivity() {
                     //En caso de SUCCESS, introduce el id, login y el token en userPreferences
                     it.data?.let { data ->
                         MyApp.userPreferences.saveAuthToken(data.accessToken,data.id.toInt(),data.login)
-                        val intent = Intent(this, SongActivity::class.java).apply {
-                            // putExtra(EXTRA_MESSAGE, message)
-                        }
                         binding.buttonChangePass.visibility = View.INVISIBLE
                         //Si el checkbox esta seleccionado, guarda los datos en userPreferences
                         if (binding.rememberMe.isChecked) {
@@ -67,6 +64,9 @@ class LoginActivity: ComponentActivity() {
                             if (MyApp.userPreferences.fetchPassword() != null) {
                                 MyApp.userPreferences.removeRememberMe()
                             }
+                        }
+                        val intent = Intent(this, SongActivity::class.java).apply {
+                            // putExtra(EXTRA_MESSAGE, message)
                         }
                         startActivity(intent)
                         finish()
@@ -97,9 +97,9 @@ class LoginActivity: ComponentActivity() {
                     login,
                     password
                 )
+                remember = binding.loginPassword.text.toString()
                 binding.login.setText("");
                 binding.loginPassword.setText("");
-                remember = binding.loginPassword.text.toString()
             } else {
                 //Si no estan todos los campos con datos, comprueba que cambo esta vacio y envia toast
                 if (login.isEmpty() && password.isEmpty()) {

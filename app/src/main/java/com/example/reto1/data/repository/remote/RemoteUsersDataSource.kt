@@ -8,10 +8,6 @@ import com.example.reto1.data.RegistrationCheck
 
 class RemoteUsersDataSource: BaseDataSource(), CommonUserRepository {
 
-    override suspend fun getUser() = getResult {
-        RetrofitClient.apiInterface.getUser()
-    }
-
     override suspend fun loginUser(user: User) = getResult {
         RetrofitClient.apiInterface.loginUser(user)
     }

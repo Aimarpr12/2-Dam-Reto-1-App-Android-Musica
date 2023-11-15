@@ -45,9 +45,6 @@ interface APIInterface {
     @PUT("auth/changePassword")
     suspend fun changePassword(@Body user: User): Response<Void>
 
-    @GET("auth/me")
-    suspend fun getUser(): Response<Integer>
-
     @POST("auth/checkEmail")
     suspend fun checkEmail(@Body registrationCheck: RegistrationCheck): Response<Void>
 

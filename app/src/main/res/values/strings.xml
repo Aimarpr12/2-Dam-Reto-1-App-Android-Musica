@@ -27,21 +27,21 @@
 
     <!-- Register -->
     <string name="noequalpassword">Las contraseñas no son iguales</string>
-    <string name="repeat_password">Repita la contraseña</string>
+    <string name="repeatPassword">Repita la contraseña</string>
     <string name="email">Correo Electronico</string>
     <string name="name">Nombre</string>
     <string name="surname">Apellido</string>
-    <string name="button_register">Registrarse</string>
+    <string name="buttonRegister">Registrarse</string>
     <string name="wrongEmail">Formato de correo incorrecto</string>
     <string name="loginAlreadyInRepository">El login esta asignado a otra cuenta</string>
     <string name="emailAlreadyInRepository">El correo esta asignado a otra cuenta</string>
     <string name="button_back">Atras</string>
-    <string name="regiterInfoLeft">Falta informacion</string>
+    <string name="registerInfoLeft">Falta informacion</string>
 
     <!-- Change Password -->
-    <string name="change_password">Cambiar contraseña</string>
-    <string name="current_password">Contraseña actual</string>
-    <string name="new_password">Nueva contraseña</string>
+    <string name="changePassword">Cambiar contraseña</string>
+    <string name="currentPassword">Contraseña actual</string>
+    <string name="newPassword">Nueva contraseña</string>
     <string name="changedPassword">Contraseña cambiada correctamente</string>
     <string name="notChangedPassword">Contraseña actual erronea</string>
     <string name="emptyCurrentPassword">Contraseña actual vacia</string>

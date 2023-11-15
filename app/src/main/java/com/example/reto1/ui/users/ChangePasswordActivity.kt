@@ -60,6 +60,7 @@ class ChangePasswordActivity: ComponentActivity() {
                             password1,
                             currentPassword
                         )
+                    eraseChangePassword(binding)
                 } else {
                     Toast.makeText(this,getString(R.string.noequalpassword), Toast.LENGTH_LONG).show()
                     eraseChangePassword(binding)
