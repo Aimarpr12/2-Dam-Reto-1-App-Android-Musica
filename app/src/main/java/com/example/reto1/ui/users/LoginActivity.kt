@@ -17,6 +17,7 @@ import com.example.reto1.utils.Resource
 class LoginActivity: ComponentActivity() {
 
     private val userRepository = RemoteUsersDataSource()
+    private var remember: String = ""
 
     private val viewModel: UserViewModel by viewModels { UsersViewModelFactory(
         userRepository
@@ -57,6 +58,16 @@ class LoginActivity: ComponentActivity() {
                             // putExtra(EXTRA_MESSAGE, message)
                         }
                         binding.buttonChangePass.visibility = View.INVISIBLE
+                        //Si el checkbox esta seleccionado, guarda los datos en userPreferences
+                        if (binding.rememberMe.isChecked) {
+                            MyApp.userPreferences.saveRememberMe(remember)
+                            remember = ""
+                        } else {
+                            //Como el checkbox no esta seleccionado, borra la contraseña del userPreferences
+                            if (MyApp.userPreferences.fetchPassword() != null) {
+                                MyApp.userPreferences.removeRememberMe()
+                            }
+                        }
                         startActivity(intent)
                         finish()
 
@@ -88,15 +99,7 @@ class LoginActivity: ComponentActivity() {
                 )
                 binding.login.setText("");
                 binding.loginPassword.setText("");
-                //Si el checkbox esta seleccionado, guarda los datos en userPreferences
-                if (binding.rememberMe.isChecked) {
-                    MyApp.userPreferences.saveRememberMe(password)
-                } else {
-                    //Como el checkbox no esta seleccionado, borra la contraseña del userPreferences
-                    if (MyApp.userPreferences.fetchPassword() != null) {
-                        MyApp.userPreferences.removeRememberMe()
-                    }
-                }
+                remember = binding.loginPassword.text.toString()
             } else {
                 //Si no estan todos los campos con datos, comprueba que cambo esta vacio y envia toast
                 if (login.isEmpty() && password.isEmpty()) {
