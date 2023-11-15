@@ -55,15 +55,11 @@ class ChangePasswordActivity: ComponentActivity() {
                 val password1 = binding.newPassword.text.toString()
                 val password2 = binding.newPassword2.text.toString()
                 val currentPassword = binding.password.text.toString()
-                val login = MyApp.userPreferences.fetchLogin()
                 if (password1 == password2) {
-                    if (login != null) {
                         viewModel.changePassword(
-                            login,
                             password1,
                             currentPassword
                         )
-                    }
                 } else {
                     Toast.makeText(this,getString(R.string.noequalpassword), Toast.LENGTH_LONG).show()
                     eraseChangePassword(binding)

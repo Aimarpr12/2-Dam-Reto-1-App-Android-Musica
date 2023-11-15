@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.reto1.MyApp
 import com.example.reto1.data.AuthenticationResponse
 import com.example.reto1.data.CommonUserRepository
 import com.example.reto1.data.RegistrationCheck
@@ -78,12 +79,9 @@ class UserViewModel(
     }
 
 
-    fun changePassword(login: String,newPassword: String, currentPassword: String) {
+    fun changePassword(newPassword: String, currentPassword: String) {
         viewModelScope.launch {
-            val user = User(null,null,null,login,null,newPassword,currentPassword)
-            Log.e("loginUser - Login",user.login)
-            Log.e("loginUser - Password",user.password)
-            user.oldPassword?.let { Log.e("changePassword - oldPassword", it) }
+            val user = User(null,null,null,null,null,newPassword,currentPassword)
             _changePassword.value = changePasswordInRepository(user)
         }
 
