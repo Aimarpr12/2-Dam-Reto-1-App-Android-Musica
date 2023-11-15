@@ -110,7 +110,7 @@
         style="@style/GrayTransparentButton"
         android:layout_width="161dp"
         android:layout_height="46dp"
-        android:text="@string/change_password"
+        android:text="@string/changePassword"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/buttonGoToAllSong"
         app:layout_constraintEnd_toEndOf="parent"

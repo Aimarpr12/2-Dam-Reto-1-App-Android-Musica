@@ -54,7 +54,6 @@ class LoginActivity: ComponentActivity() {
                     //En caso de SUCCESS, introduce el id, login y el token en userPreferences
                     it.data?.let { data ->
                         MyApp.userPreferences.saveAuthToken(data.accessToken,data.id.toInt(),data.login)
-                        binding.buttonChangePass.visibility = View.INVISIBLE
                         //Si el checkbox esta seleccionado, guarda los datos en userPreferences
                         if (binding.rememberMe.isChecked) {
                             MyApp.userPreferences.saveRememberMe(remember)
@@ -75,8 +74,7 @@ class LoginActivity: ComponentActivity() {
                 }
 
                 Resource.Status.ERROR -> {
-                    binding.buttonChangePass.visibility = View.VISIBLE
-                    Toast.makeText(this,it.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,getString(R.string.wrongLogin), Toast.LENGTH_LONG).show()
                 }
 
                 Resource.Status.LOADING -> {
@@ -113,11 +111,6 @@ class LoginActivity: ComponentActivity() {
 
         }
 
-        binding.buttonChangePass.setOnClickListener {
-            val intent = Intent(this, ChangePasswordActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
 
         binding.registerButton.setOnClickListener() {
             val intent = Intent(this, RegisterActivity::class.java)
