@@ -22,8 +22,8 @@ Este repositorio contiene un proyecto destinado a gestionar las canciones favori
 
 ## Repositorios Relacionados
 
-- [Repositorio del Proyecto de Escritorio](https://github.com/PRSpidy/2-Dam-Reto-1-Server-Musica.git)
-- [Repositorio de la Aplicación Android](https://github.com/PRSpidy/2-Dam-Reto-1-App-Android-Musica.git)
+- [Repositorio del Proyecto de Escritorio](https://github.com/Aimarpr12/2-Dam-Reto-1-Server-Musica.git)
+- [Repositorio de la Aplicación Android](https://github.com/Aimarpr12/2-Dam-Reto-1-App-Android-Musica.git)
 
 ## Descripción del Proyecto
 
@@ -65,7 +65,7 @@ Sigue los siguientes pasos para descargar y configurar el proyecto:
 1. Clona el repositorio de Android:
 
 ```bash
-   git clone https://github.com/PRSpidy/2-Dam-Reto-1-App-Android-Musica.git 
+   git clone https://github.com/Aimarpr12/2-Dam-Reto-1-App-Android-Musica.git 
 ```
 2. Abre el proyecto en Android Studio.
 3. Compila y ejecuta la aplicación en un emulador o dispositivo Android.
